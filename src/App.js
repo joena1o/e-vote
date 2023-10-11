@@ -164,6 +164,7 @@ export default function EnhancedLogin() {
       <StyledInput 
         prefix={<LockOutlined />} 
         type="password" 
+      
         placeholder="Password" 
         name="password" 
         onChange={handleChange} 
