@@ -1,0 +1,98 @@
+import React, { useState } from 'react';
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css'; // Import styles for react-tabs
+import styled from 'styled-components';
+import CreateElections from './maincontent/ManageElections/CreateElection';
+import ElectionList from './maincontent/ManageElections/ElectionList';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faList } from '@fortawesome/free-solid-svg-icons'; // Import Font Awesome icons
+
+const FullHeightContainer = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+`;
+
+const TabsContainer = styled.div`
+  text-align: center;
+  width: 100%;
+  max-width: 1200px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const StyledTab = styled(Tab)`
+  padding: 10px 20px;
+  color: #333;
+  cursor: pointer;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right, #ce7348, #9a552e); /* Linear gradient background */
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  transition: background 0.2s ease-in-out;
+
+  &.react-tabs__tab--selected {
+    background: linear-gradient(to right, #ce7348, #9a552e); /* Highlight color for the selected tab */
+    color: #fff; /* Text color for the selected tab */
+    border-radius: 5px 5px 0 0;
+  }
+
+  &:hover {
+    background: linear-gradient(to right, #ce7348, #9a552e); /* Hover effect */
+  }
+`;
+
+const IconWrapper = styled.div`
+  margin-right: 5px;
+`;
+
+const ManageElections = () => {
+  const [activeTab, setActiveTab] = useState(0);
+
+  const handleTabChange = (index) => {
+    setActiveTab(index);
+  };
+
+  return (
+    <FullHeightContainer>
+      <h1>Manage Elections</h1>
+      <TabsContainer>
+        <Tabs selectedIndex={activeTab} onSelect={handleTabChange}>
+          <TabList style={{ display: 'flex', justifyContent: 'center' }}>
+            <StyledTab>
+              <IconWrapper>
+                <FontAwesomeIcon icon={faPlus} />
+              </IconWrapper>
+              Create Election
+            </StyledTab>
+            <StyledTab>
+              <IconWrapper>
+                <FontAwesomeIcon icon={faList} />
+              </IconWrapper>
+              Election List
+            </StyledTab>
+          </TabList>
+        </Tabs>
+        <Tabs selectedIndex={activeTab} onSelect={handleTabChange}>
+          <TabPanel>
+            <CreateElections />
+          </TabPanel>
+          <TabPanel>
+            <ElectionList />
+          </TabPanel>
+        </Tabs>
+      </TabsContainer>
+    </FullHeightContainer>
+  );
+};
+
+export default ManageElections;
