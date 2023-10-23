@@ -15,11 +15,11 @@ const ManageAdmins = () => {
       <Heading mb={4}>Manage Admins</Heading>
       <Box w="40%" maxW="500px">
         <Tabs index={activeTab} onChange={handleTabChange}>
-          <TabList justifyContent="center" w="50%">  {/* Adjusted width to 50% */}
-            <Tab fontSize="xs" px={2} py={1}>
+          <TabList justifyContent="center">
+            <Tab fontSize="xs" px={2} py={1}>  {/* Adjusted font size to 'xs' and padding */}
               Add Admin
             </Tab>
-            <Tab fontSize="xs" px={2} py={1}>
+            <Tab fontSize="xs" px={2} py={1}>  {/* Adjusted font size to 'xs' and padding */}
               Admin List
             </Tab>
           </TabList>

@@ -32,7 +32,7 @@ function App() {
               <Route path="/admin-dashboard/*" element={<AdminDashboard />} />
               <Route path= "/ElectionCommittee-dashboard/*" element={<ElectionCommitteeDashboard />} />
               {/* Redirect root to /admin-dashboard */}
-              <Route path="/" element={<Navigate to="/admin-dashboard" replace />} />
+              <Route path="/" element={<Navigate to="/admi>n-dashboard" replace />} />
             </Routes>
           </Router>
           {/* Render DarkModeToggle only if not on the "/login" page */}

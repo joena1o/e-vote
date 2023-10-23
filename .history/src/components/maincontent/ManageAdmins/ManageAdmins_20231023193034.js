@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Box, Flex, Heading } from '@chakra-ui/react';
 import AddAdmin from './AddAdmin';
 import AdminList from './AdminList';
+import { FaUserPlus, FaList } from 'react-icons/fa'; // Using react-icons for Font Awesome icons
 
 const ManageAdmins = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -13,13 +14,15 @@ const ManageAdmins = () => {
   return (
     <Flex direction="column" align="center" w="100%" h="100%">
       <Heading mb={4}>Manage Admins</Heading>
-      <Box w="40%" maxW="500px">
+      <Box w="20%" maxW="500px">
         <Tabs index={activeTab} onChange={handleTabChange}>
-          <TabList justifyContent="center" w="50%">  {/* Adjusted width to 50% */}
-            <Tab fontSize="xs" px={2} py={1}>
+          <TabList justifyContent="center">
+            <Tab fontSize="sm" px={4} py={2}>
+              <FaUserPlus mr={2} />
               Add Admin
             </Tab>
-            <Tab fontSize="xs" px={2} py={1}>
+            <Tab fontSize="sm" px={4} py={2}>
+              <FaList mr={2} />
               Admin List
             </Tab>
           </TabList>

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { FiHome, FiUser, FiUsers, FiFileText, FiSettings, FiLogOut, FiPieChart } from 'react-icons/fi';
+import { FiHome, FiFileText, FiUsers, FiPieChart, FiBarChart2, FiTrendingUp } from 'react-icons/fi';
 import { useColorMode } from '@chakra-ui/react';
 
 const SidebarContainer = styled.nav`
@@ -39,14 +39,6 @@ const StyledLink = styled(Link)`
   text-align: center;
   word-wrap: break-word;
   overflow-wrap: break-word;
-
-  @media (max-width: 768px) {
-    font-size: 0.4rem;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 0.3rem;
-  }
 `;
 
 const LinkItem = styled.li`
@@ -59,72 +51,63 @@ const Icon = styled.div`
   font-size: 2rem;
   color: #fff;
 
-  @media (max-width: 768px) {
-    font-size: 0.9rem;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 0.8rem;
-  }
-
   margin-bottom: 5px;
 
   ${StyledLink}:hover & {
-    color: #fce364;  // Change icon color when the link is hovered
+    color: #fce364;
   }
 `;
 
-function Sidebar() {
+const QuickStats = styled.div`
+  margin-top: auto;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.1);
+  border-top: 1px solid #fff;
+`;
+
+function ElectionCommitteeSidebar() {
   const { colorMode } = useColorMode();
 
   return (
     <SidebarContainer theme={colorMode}>
       <LinkList>
         <LinkItem>
-          <StyledLink to="/admin-dashboard">
+          <StyledLink to="/ElectionCommittee-dashboard/dashboard">
             <Icon><FiHome /></Icon>
             Home
           </StyledLink>
         </LinkItem>
         <LinkItem>
-          <StyledLink to="/admin-dashboard/manage-admin">
-            <Icon><FiUser /></Icon>
-            Manage Admins
-          </StyledLink>
-        </LinkItem>
-        <LinkItem>
-          <StyledLink to="/admin-dashboard/student-management">
-            <Icon><FiUsers /></Icon>
-            Student Management
-          </StyledLink>
-        </LinkItem>
-        <LinkItem>
-          <StyledLink to="/admin-dashboard/manage-elections">
+          <StyledLink to="/ElectionCommittee-dashboard/election-list">
             <Icon><FiFileText /></Icon>
-            Manage Elections
+            Elections
           </StyledLink>
         </LinkItem>
         <LinkItem>
-          <StyledLink to="/admin-dashboard/view-results">
+          <StyledLink to="/ElectionCommittee-dashboard/candidates-screening">
+            <Icon><FiUsers /></Icon>
+            Candidates
+          </StyledLink>
+        </LinkItem>
+        <LinkItem>
+          <StyledLink to="ElectionCommittee-dashboard/view-results">
             <Icon><FiPieChart /></Icon>
-            View Results
+            Results
           </StyledLink>
         </LinkItem>
         <LinkItem>
-          <StyledLink to="/admin-dashboard/settings">
-            <Icon><FiSettings /></Icon>
-            Settings
-          </StyledLink>
-        </LinkItem>
-        <LinkItem>
-          <StyledLink to="/logout">
-            <Icon><FiLogOut /></Icon>
-            Logout
+          <StyledLink to="/reports">
+            <Icon><FiBarChart2 /></Icon>
+            Reports
           </StyledLink>
         </LinkItem>
       </LinkList>
+      <QuickStats>
+        <h3>Quick Stats</h3>
+        {/* Here you can place any quick statistics or relevant data for the admin */}
+      </QuickStats>
     </SidebarContainer>
   );
 }
 
-export default Sidebar;
+export default ElectionCommitteeSidebar;
