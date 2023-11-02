@@ -1,21 +1,16 @@
-import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-Button,useDisclosure
-} from '@chakra-ui/react'
-import {Table,Thead,TabList,Tab,Tabs,Tbody,Tr,Th,Td,TableCaption,Stack,TableContainer} from '@chakra-ui/react';
-import {FormControl,FormLabel} from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, useDisclosure } from '@chakra-ui/react'
+import { Table, Thead, TabList, Tab, Tabs, Tbody, Tr, Th, Td, TableCaption, TableContainer } from '@chakra-ui/react';
+import { FormControl, FormLabel } from '@chakra-ui/react';
 import { Select } from '@chakra-ui/react'
-import { Input } from '@chakra-ui/react'
+import { Input } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import {FaVoteYea} from 'react-icons/fa';
+import { HStack, Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from '@chakra-ui/react'
+import { Link } from 'react-router-dom';
 
 const StudentVote = () =>{
+
+    // const { data } = useParams();
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -28,7 +23,23 @@ const StudentVote = () =>{
         alignItems: "center", flexDirection: "column", width: "100%", marginTop: "20px"
     }}>
 
-    <Tabs>
+    <HStack spacing='24px' style={{width:"90%", margin:"50px 0px 50px 0px"}}>
+
+          <Breadcrumb>
+
+          <BreadcrumbItem>
+            <BreadcrumbLink href='#'>Home</BreadcrumbLink>
+          </BreadcrumbItem>
+
+          <BreadcrumbItem isCurrentPage>
+            <BreadcrumbLink href='#'>Vote</BreadcrumbLink>
+          </BreadcrumbItem>
+
+          </Breadcrumb>
+
+      </HStack>
+
+    <Tabs style={{width:"90%"}}>
         <TabList>
             <Tab>All</Tab>
             <Tab>General</Tab>
@@ -52,27 +63,47 @@ const StudentVote = () =>{
     <Tbody>
         <Tr>
         <Td>SUG President</Td>
-        <Td><Button colorScheme='yellow' onClick={onOpen} variant='outline'><FaVoteYea /></Button></Td>
+        <Td>
+            <Link to={`/student-dashboard/vote-page/${"SUG President"}`}>
+            <Button colorScheme='yellow' onClick={onOpen} variant='outline'><FaVoteYea /></Button>
+            </Link>
+        </Td>
         <Td>Pending</Td>
       </Tr>
       <Tr>
         <Td>Sports Director</Td>
-        <Td><Button colorScheme='yellow' onClick={onOpen} variant='outline'><FaVoteYea /></Button></Td>
+        <Td>
+          <Link to={`/student-dashboard/vote-page/${"Sports Director"}`}>
+            <Button colorScheme='yellow' onClick={onOpen} variant='outline'><FaVoteYea /></Button>
+            </Link>
+        </Td>
         <Td>Pending</Td>
       </Tr>
       <Tr>
         <Td>Director Of Social</Td>
-        <Td><Button colorScheme='yellow' onClick={onOpen} variant='outline'><FaVoteYea /></Button></Td>
+        <Td>
+        <Link to={`/student-dashboard/vote-page/${"Director Of Social"}`}>
+            <Button colorScheme='yellow' onClick={onOpen} variant='outline'><FaVoteYea /></Button>
+        </Link>
+        </Td>
         <Td>Pending</Td>
       </Tr>
       <Tr>
         <Td>Financial Secretary</Td>
-        <Td><Button colorScheme='yellow' onClick={onOpen} variant='outline'><FaVoteYea /></Button></Td>
+        <Td>
+        <Link to={`/student-dashboard/vote-page/${"Financial Secretary"}`}>
+            <Button colorScheme='yellow' onClick={onOpen} variant='outline'><FaVoteYea /></Button>
+        </Link>
+        </Td>
         <Td>Pending</Td>
       </Tr>
       <Tr>
         <Td>Treasurer</Td>
-        <Td><Button colorScheme='yellow' onClick={onOpen} variant='outline'><FaVoteYea /></Button></Td>
+        <Td>
+        <Link to={`/student-dashboard/vote-page/${"Financial Secretary"}`}>
+            <Button colorScheme='yellow' onClick={onOpen} variant='outline'><FaVoteYea /></Button>
+        </Link>
+        </Td>
         <Td>Pending</Td>
       </Tr>
     </Tbody>
@@ -80,7 +111,7 @@ const StudentVote = () =>{
 </TableContainer>
 
 
-<Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>SUG President</ModalHeader>

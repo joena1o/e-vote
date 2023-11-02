@@ -1,14 +1,18 @@
 import React from 'react';
 import { Box, Heading, Text, Flex, useColorModeValue } from '@chakra-ui/react';
 
-function ElectionCommitteeHome() {
-  // Mock data
-  const adminName = 'Election Committee';
-  const totalVoters = '1,234'; // Example total voters count
-  const upcomingElectionsCount = 3; // Example upcoming elections count
+function ElectionCommitteeHome({ label }) {
+  const { data, isLoading, error } = useElectionsData();
+
+  // You may want to handle isLoading and error states as well
 
   const bgColor = useColorModeValue('gray.50', 'gray.800');
   const textColor = useColorModeValue('gray.600', 'gray.200');
+
+  // Assuming you want to keep the mock data for total voters and upcoming elections for now
+  const adminName = 'Election Committee';
+  const totalVoters = '1,234'; // Example total voters count
+  const upcomingElectionsCount = 3; // Example upcoming elections count
 
   return (
     <Box bg={bgColor} p={5} borderRadius="md" boxShadow="base" w="full">
@@ -22,7 +26,10 @@ function ElectionCommitteeHome() {
         <Text fontSize="xl" color={textColor}>
           Upcoming Elections: {upcomingElectionsCount}
         </Text>
-    
+        <Text fontSize="xl" color={textColor}>
+          Total Elections: {data?.length || 0}
+        </Text>
+        {/* You can add more statistics here using data from useElectionsData */}
       </Flex>
     </Box>
   );

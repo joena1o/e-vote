@@ -8,10 +8,10 @@ import {GrDocumentVerified} from "react-icons/gr";
 import { useColorMode } from '@chakra-ui/react';
 
 const SidebarContainer = styled.nav`
-  background: ${props => (props.theme === 'dark' ? '#333' : 'white')};
+  background: ${props => (props.theme === 'dark' ? '#333' : 'linear-gradient(to right, #ce7348, #9a552e)')};
   padding: 15px;
   height: 100vh;
-  color: ${props => (props.theme === 'dark' ? '#fff' : '#333')};
+  color: #fff;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   display: flex;
   flex-direction: column;
@@ -25,7 +25,7 @@ const LinkList = styled.ul`
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: ${props => (props.theme === 'dark' ? '#fff' : '#333')};
+  color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,6 +34,15 @@ const StyledLink = styled(Link)`
   cursor: pointer;
   font-size: 0.5rem;
 
+  &:hover {
+    color: #fce364;
+  }
+
+  width: 80px;
+  text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+
   @media (max-width: 768px) {
     font-size: 0.4rem;
   }
@@ -41,15 +50,6 @@ const StyledLink = styled(Link)`
   @media (max-width: 480px) {
     font-size: 0.3rem;
   }
-
-  &:hover {
-    color: #ce7348;
-  }
-
-  width: 80px;
-  text-align: center;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
 `;
 
 const LinkItem = styled.li`
@@ -60,6 +60,7 @@ const LinkItem = styled.li`
 
 const Icon = styled.div`
   font-size: 2rem;
+  color: #fff;
 
   @media (max-width: 768px) {
     font-size: 0.9rem;
@@ -70,6 +71,10 @@ const Icon = styled.div`
   }
 
   margin-bottom: 5px;
+
+  ${StyledLink}:hover & {
+    color: #fce364;  // Change icon color when the link is hovered
+  }
 `;
 
 function StudentDashSideBar() {

@@ -1,24 +1,18 @@
-import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-Button,useDisclosure
-} from '@chakra-ui/react'
-import {Table,Thead,TabList,Tab,Tabs,Tbody,Tr,Th,Td,TableCaption,Stack,TableContainer} from '@chakra-ui/react';
+
+import { Modal,ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody,ModalCloseButton,Button,useDisclosure} from '@chakra-ui/react'
+import {Table,Thead,TabList,Tab,Tabs,Tbody,Tr,Th,Td,TableCaption,TabPanel, TabPanels, Stack, HStack, TableContainer} from '@chakra-ui/react';
 import {FormControl,FormLabel} from '@chakra-ui/react';
 import { Select } from '@chakra-ui/react'
 import { Input } from '@chakra-ui/react'
 import React, { useState } from 'react';
 import {AiFillEye} from 'react-icons/ai';
-
-const buttonStyle = {
-    padding: "10px",
-    margin: "50px 40px"
-};
+import { Link } from 'react-router-dom';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+} from '@chakra-ui/react'
 
 
 function StudentNominate() {
@@ -35,59 +29,112 @@ function StudentNominate() {
         alignItems: "center", flexDirection: "column", width: "100%", marginTop: "20px"
     }}>
 
+      <HStack spacing='24px' style={{width:"90%", margin:"50px 0px 50px 0px"}}>
 
-    <Stack style={{width:"95%", margin:"50px 50px"}} spacing={4} direction='row' align='end'>
-    <Button style={{buttonStyle}} colorScheme='yellow' variant='outline' onClick={onOpen}>Nominate Candidate</Button>
-    </Stack>
+          <Breadcrumb>
 
-    <Tabs>
+          <BreadcrumbItem>
+            <BreadcrumbLink href='#'>Home</BreadcrumbLink>
+          </BreadcrumbItem>
+
+          <BreadcrumbItem isCurrentPage>
+            <BreadcrumbLink href='#'>Nomination</BreadcrumbLink>
+          </BreadcrumbItem>
+
+          </Breadcrumb>
+
+      </HStack>
+
+
+    <Tabs style={{width:"90%"}}>
         <TabList>
             <Tab>All</Tab>
             <Tab>General</Tab>
             <Tab>Departmental</Tab>
         </TabList>
+
+        <TabPanels>
+
+        <TabPanel>
+        <TableContainer style={{width:"100%"}}>
+          <Table variant='striped' size="lg">
+            <TableCaption>Available Elections</TableCaption>
+            <Thead>
+              <Tr style={{textAlign:"start"}}>
+                <Th>All Elections</Th>
+                <Th isNumeric>Session</Th>
+                <Th>Action</Th>
+                <Th>Status</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              <Tr>
+                <Td>SUG Election 2023</Td>
+                <Td>2021/2022</Td>
+                <Td><Link to="/student-dashboard/election-page"><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
+                <Td>Upcoming</Td>
+              </Tr>
+            </Tbody>
+          </Table>
+        </TableContainer>
+        </TabPanel>
+
+        <TabPanel>
+        <TableContainer style={{width:"100%"}}>
+          <Table variant='striped' size="lg">
+            <TableCaption>Available Elections</TableCaption>
+            <Thead>
+              <Tr style={{textAlign:"start"}}>
+                <Th>General Elections</Th>
+                <Th isNumeric>Session</Th>
+                <Th>Action</Th>
+                <Th>Status</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              <Tr>
+                <Td>SUG Election 2023</Td>
+                <Td>2021/2022</Td>
+                <Td><Link to="/student-dashboard/election-page"><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
+                <Td>Upcoming</Td>
+              </Tr>
+            </Tbody>
+          </Table>
+        </TableContainer>
+        </TabPanel>
+
+        <TabPanel>
+        <TableContainer style={{width:"100%"}}>
+          <Table variant='striped' size="lg">
+            <TableCaption>Available Elections</TableCaption>
+            <Thead>
+              <Tr style={{textAlign:"start"}}>
+                <Th>Department Election</Th>
+                <Th isNumeric>Session</Th>
+                <Th>Action</Th>
+                <Th>Status</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+            <Tr>
+                <Td>SUG Election 2023</Td>
+                <Td>2021/2022</Td>
+                <Td><Link to="/student-dashboard/election-page"><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
+                <Td>Upcoming</Td>
+              </Tr>
+            </Tbody>
+          </Table>
+        </TableContainer>
+        </TabPanel>
+
+        </TabPanels>
+
     </Tabs>
 
     <br></br><br></br>
 
 
-<TableContainer style={{width:"90%"}}>
-  <Table variant='striped' size="lg">
-    <TableCaption>Nominated candidates for the upcoming election</TableCaption>
-    <Thead>
-      <Tr style={{textAlign:"start"}}>
-        <Th>Name</Th>
-        <Th>Faculty</Th>
-        <Th isNumeric>Department</Th>
-        <Th isNumeric>Role</Th>
-        <Th>Action</Th>
-      </Tr>
-    </Thead>
-    <Tbody>
-      <Tr>
-        <Td>Hyefur Jonathan</Td>
-        <Td>Engineering</Td>
-        <Td>Electrical/Electronics Engineering</Td>
-        <Td>Sports Director</Td>
-        <Td><Button colorScheme='yellow' variant='outline'><AiFillEye /></Button></Td>
-      </Tr>
-      <Tr>
-        <Td>Hyefur Jonathan</Td>
-        <Td>Engineering</Td>
-        <Td>Electrical/Electronics Engineering</Td>
-        <Td>Sports Director</Td>
-        <Td><Button colorScheme='yellow' variant='outline'><AiFillEye /></Button></Td>
-      </Tr>
-      <Tr>
-        <Td>Hyefur Jonathan</Td>
-        <Td>Engineering</Td>
-        <Td>Electrical/Electronics Engineering</Td>
-        <Td>Sports Director</Td>
-        <Td><Button colorScheme='yellow' variant='outline'><AiFillEye /></Button></Td>
-      </Tr>
-    </Tbody>
-  </Table>
-</TableContainer>
+
 
 
         <Modal isOpen={isOpen} onClose={onClose}>
