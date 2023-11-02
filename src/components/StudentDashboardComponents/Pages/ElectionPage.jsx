@@ -76,14 +76,14 @@ function ElectionPage() {
             <Td>2022/2023</Td>
             <Td>19 candidates</Td>
             <Td><Button colorScheme='yellow' variant='outline'><AiFillEye /></Button></Td>
-            <Td><Button onClick={handleOpen} colorScheme='yellow'>Apply</Button></Td>
+            <Td><Link to={`/student-dashboard/election-application-page/${"SUG President"}`}><Button colorScheme='yellow'>Apply</Button></Link></Td>
           </Tr>
           <Tr>
             <Td>Director Of Sports</Td>
             <Td>2022/2023</Td>
             <Td>19 candidates</Td>
             <Td><Button colorScheme='yellow' variant='outline'><AiFillEye /></Button></Td>
-            <Td><Button onClick={handleOpen} colorScheme='yellow'>Apply</Button></Td>
+            <Td><Link to={`/student-dashboard/election-application-page/${"SUG President"}`}><Button colorScheme='yellow'>Apply</Button></Link></Td>
           </Tr>
 
           <Tr>
@@ -91,7 +91,7 @@ function ElectionPage() {
             <Td>2022/2023</Td>
             <Td>19 candidates</Td>
             <Td><Button colorScheme='yellow' variant='outline'><AiFillEye /></Button></Td>
-            <Td><Button onClick={handleOpen} colorScheme='yellow'>Apply</Button></Td>
+            <Td><Link to={`/student-dashboard/election-application-page/${"SUG President"}`}><Button colorScheme='yellow'>Apply</Button></Link></Td>
           </Tr>
 
           <Tr>
@@ -99,7 +99,7 @@ function ElectionPage() {
             <Td>2022/2023</Td>
             <Td>19 candidates</Td>
             <Td><Button colorScheme='yellow' variant='outline'><AiFillEye /></Button></Td>
-            <Td><Button onClick={handleOpen} colorScheme='yellow'>Apply</Button></Td>
+            <Td><Link to={`/student-dashboard/election-application-page/${"SUG President"}`}><Button colorScheme='yellow'>Apply</Button></Link></Td>
           </Tr>
         </Tbody>
       </Table>
