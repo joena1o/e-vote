@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Heading, Text, Flex, useColorModeValue } from '@chakra-ui/react';
-import { useElectionsData } from '../../../hooks/useElectionsData'; 
+import { useElectionsData } from '../../hooks/hooks'; 
 
 function ElectionCommitteeHome({ label }) {
   const { data, isLoading, error } = useElectionsData();
