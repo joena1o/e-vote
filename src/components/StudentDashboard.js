@@ -6,7 +6,11 @@ import { Route, Routes } from 'react-router-dom';
 import Settings from './maincontent/Settings/Settings';
 import StudentNominate from './StudentDashboardComponents/Pages/Nominate';
 import StudentVote from './StudentDashboardComponents/Pages/Vote';
+import ElectionPage from './StudentDashboardComponents/Pages/ElectionPage';
 import StudentHome from './StudentDashboardComponents/Pages/Home';
+import NomineesPage from './StudentDashboardComponents/Pages/NomineesPage';
+import VotePage from './StudentDashboardComponents/Pages/VotePage';
+import ElectionApplication from './StudentDashboardComponents/Pages/ElectionApplicationPage';
 
  const StudentDashboard = ()=>{
 
@@ -34,6 +38,10 @@ const Content = styled.div`
             <Route path="settings" element={<Settings />} />
             <Route path="nominate" element={<StudentNominate />} />
             <Route path='vote' element={<StudentVote />} />
+            <Route path='election-page' element={<ElectionPage />} />
+            <Route path='nominees-page/:data' element={<NomineesPage />} />
+            <Route path='vote-page/:data' element={<VotePage />} />
+            <Route path='election-application-page/:data' element={<ElectionApplication />} />
             </Routes>
         </Content>
     </Container>;
