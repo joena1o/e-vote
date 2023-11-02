@@ -144,7 +144,7 @@ function CandidateScreening() {
               <Td>{candidate.cgpa}</Td>
               <Td>{candidate.qualificationStatus}</Td>
               <Td>
-                <Button colorScheme="yellow" onClick={() => onViewDetails(candidate)}>
+                <Button colorScheme="yellow.500" onClick={() => onViewDetails(candidate)}>
                   View Details
                 </Button>
               </Td>

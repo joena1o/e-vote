@@ -37,7 +37,7 @@ const Home = () => {
         <StatItem>Total Voters: {totalVoters ?? 'Loading...'}</StatItem>
         <StatItem>Upcoming Elections: {upcomingElections.length}</StatItem>
       </Stats>
-      
+      {/* Additional UI components */}
     </HomeContainer>
   );
 };

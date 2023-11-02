@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import ElectionCommitteeSidebar from './ElectionCommitteeSidebar';
 import Navbar from '../Navbar'; 
 import styled from 'styled-components';
-import ElectionList from './ManageElections/ManageElections';
+import ElectionList from './ManageElections/ElectionList';
 import ViewResults from './ElectionResults/ViewElectionResults';
 import ElectionCommitteeHome from './home/ElectionCommitteeHome';
 import CandidatesScreening from './CandidateScreening/CandidateScreening';

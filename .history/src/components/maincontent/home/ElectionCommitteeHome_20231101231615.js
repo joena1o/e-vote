@@ -3,7 +3,7 @@ import { Box, Heading, Text, Flex, useColorModeValue } from '@chakra-ui/react';
 
 function ElectionCommitteeHome() {
   // Mock data
-  const adminName = 'Election Committee';
+  const adminName = 'Admin';
   const totalVoters = '1,234'; // Example total voters count
   const upcomingElectionsCount = 3; // Example upcoming elections count
 

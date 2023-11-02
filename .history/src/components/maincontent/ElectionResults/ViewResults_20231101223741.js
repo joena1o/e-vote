@@ -7,15 +7,39 @@ const ViewResults = () => {
   const mockPastElectionResults = [
     {
       id: 1,
-      electionName: '2023 SUG  General Election',
+      electionName: '2023 Presidential Election',
       date: '2023-01-10',
       electionType: 'Presidential',
       candidates: [
         { name: 'Akinwumi Adesina', votes: 500, position: 'President' },
-        { name: 'Aliya Hamza', votes: 650, position: 'President' },
-        { name: 'Chukwuma Uche', votes: 350, position: 'President' },
+        { name: 'Yemi Osinbajo', votes: 450, position: 'President' },
+        { name: 'Peter Obi', votes: 350, position: 'President' },
       ],
-      winner: 'Aliya Hamza',
+      winner: 'Akinwumi Adesina',
+    },
+    {
+      id: 2,
+      electionName: '2023 Gubernatorial Election',
+      date: '2023-02-15',
+      electionType: 'Gubernatorial',
+      candidates: [
+        { name: 'Babatunde Fashola', votes: 600, position: 'Governor' },
+        { name: 'Akin Ambode', votes: 550, position: 'Governor' },
+        { name: 'Jide Sanwo-Olu', votes: 400, position: 'Governor' },
+      ],
+      winner: 'Babatunde Fashola',
+    },
+    {
+      id: 3,
+      electionName: '2023 Senatorial Election',
+      date: '2023-03-20',
+      electionType: 'Senatorial',
+      candidates: [
+        { name: 'Chimamanda Ngozi Adichie', votes: 750, position: 'Senator' },
+        { name: 'Wole Soyinka', votes: 500, position: 'Senator' },
+        { name: 'Chinua Achebe', votes: 250, position: 'Senator' },
+      ],
+      winner: 'Chimamanda Ngozi Adichie',
     },
     // ... other past election results
   ];

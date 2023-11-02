@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { FiHome, FiFileText, FiUsers, FiPieChart, FiBarChart2, FiLogOut } from 'react-icons/fi';
+import { FiHome, FiFileText, FiUsers, FiPieChart, FiBarChart2, FiTrendingUp } from 'react-icons/fi';
 import { useColorMode } from '@chakra-ui/react';
 
 

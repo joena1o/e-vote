@@ -83,7 +83,7 @@ const mockCandidates = [
   {
     id: 9,
     name: 'Helon Habila',
-    position: 'President',
+    position: 'Library Prefect',
     cgpa: 3.1,
     qualificationStatus: 'Not Qualified',
     reason: 'Disciplinary issues',
@@ -91,7 +91,7 @@ const mockCandidates = [
   {
     id: 10,
     name: 'Sefi Atta',
-    position: 'Senator',
+    position: 'Health Prefect',
     cgpa: 3.7,
     qualificationStatus: 'Qualified',
   },
@@ -144,7 +144,7 @@ function CandidateScreening() {
               <Td>{candidate.cgpa}</Td>
               <Td>{candidate.qualificationStatus}</Td>
               <Td>
-                <Button colorScheme="yellow" onClick={() => onViewDetails(candidate)}>
+                <Button colorScheme="blue" onClick={() => onViewDetails(candidate)}>
                   View Details
                 </Button>
               </Td>

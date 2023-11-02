@@ -7,15 +7,15 @@ const ViewResults = () => {
   const mockPastElectionResults = [
     {
       id: 1,
-      electionName: '2023 SUG  General Election',
+      electionName: '2023 Presidential Election',
       date: '2023-01-10',
       electionType: 'Presidential',
       candidates: [
         { name: 'Akinwumi Adesina', votes: 500, position: 'President' },
-        { name: 'Aliya Hamza', votes: 650, position: 'President' },
-        { name: 'Chukwuma Uche', votes: 350, position: 'President' },
+        { name: 'Yemi Osinbajo', votes: 450, position: 'President' },
+        { name: 'Peter Obi', votes: 350, position: 'President' },
       ],
-      winner: 'Aliya Hamza',
+      winner: 'Akinwumi Adesina',
     },
     // ... other past election results
   ];

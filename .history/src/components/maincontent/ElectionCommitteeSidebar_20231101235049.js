@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { FiHome, FiFileText, FiUsers, FiPieChart, FiBarChart2, FiLogOut } from 'react-icons/fi';
+import { FiHome, FiFileText, FiUsers, FiPieChart, FiBarChart2, FiTrendingUp } from 'react-icons/fi';
 import { useColorMode } from '@chakra-ui/react';
 
 
@@ -79,7 +79,7 @@ function ElectionCommitteeSidebar() {
           </StyledLink>
         </LinkItem>
         <LinkItem>
-          <StyledLink to="/ElectionCommittee-dashboard/election-list">
+          <StyledLink to="/ElectionCommittee-dashboard/ElectionList">
             <Icon><FiFileText /></Icon>
             Elections
           </StyledLink>
@@ -97,9 +97,9 @@ function ElectionCommitteeSidebar() {
           </StyledLink>
         </LinkItem>
         <LinkItem>
-        <StyledLink to="/logout">
-            <Icon><FiLogOut /></Icon>
-            Logout
+          <StyledLink to="/reports">
+            <Icon><FiBarChart2 /></Icon>
+            Reports
           </StyledLink>
         </LinkItem>
       </LinkList>
