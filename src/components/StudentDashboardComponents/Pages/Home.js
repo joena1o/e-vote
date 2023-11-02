@@ -1,7 +1,7 @@
+import ElectionCommitteeHome from "../../maincontent/home/ElectionCommitteeHome";
+
 const StudentHome = () =>{
-    return <div style={{backgroundColor:"red", width:"100%"}}>
-        Home
-    </div>;
+    return <ElectionCommitteeHome label={"Student Dashboard"} />
 }
 
 export default StudentHome;
