@@ -11,8 +11,6 @@ import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import Footer from './Footer';// Import the Footer component
 import styled from 'styled-components';
-import ElectionVotesLog from './maincontent/ElectionResults/report';
-
 
 const Container = styled.div`
   display: flex;
@@ -39,7 +37,6 @@ const AdminDashboard = () => {
           <Route path="settings" element={<Settings />} />
           <Route path="manage-admin" element={<ManageAdmin />} />
           <Route path="manage-elections" element={<ManageElections />} />
-          <Route path="election-Results" element={<ElectionVotesLog />} />
         </Routes>
       </Content>
       <Footer />

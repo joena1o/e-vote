@@ -7,7 +7,7 @@ import { ChakraProvider, ColorModeProvider, Button, useColorMode } from '@chakra
 import { Provider } from 'react-redux';
 import store from './Redux/store';
 import ElectionCommitteeDashboard from './components/maincontent/ElectionCommitteeDashboard';
-
+import Footer from './components/Footer';
 
 // Component to toggle dark mode
 function DarkModeToggle() {
@@ -40,6 +40,7 @@ function App() {
           </Router>
           {/* Render DarkModeToggle only if not on the "/login" page */}
           {/* {!isLoginPage && <DarkModeToggle />} */}
+          <Footer />
         </ColorModeProvider>
       </ChakraProvider>
     </Provider>

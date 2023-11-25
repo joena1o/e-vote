@@ -7,7 +7,7 @@ import { ChakraProvider, ColorModeProvider, Button, useColorMode } from '@chakra
 import { Provider } from 'react-redux';
 import store from './Redux/store';
 import ElectionCommitteeDashboard from './components/maincontent/ElectionCommitteeDashboard';
-
+import Footer from './components/Footer';
 
 // Component to toggle dark mode
 function DarkModeToggle() {
@@ -20,6 +20,7 @@ function DarkModeToggle() {
 }
 
 function App() {
+  const { colorMode } = useColorMode();
   // Check if the current route is not the "/login" route, then render the DarkModeToggle
   // const isLoginPage = window.location.pathname === '/login';
 
@@ -40,6 +41,7 @@ function App() {
           </Router>
           {/* Render DarkModeToggle only if not on the "/login" page */}
           {/* {!isLoginPage && <DarkModeToggle />} */}
+          <Footer colorMode={colorMode} />
         </ColorModeProvider>
       </ChakraProvider>
     </Provider>

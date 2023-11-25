@@ -11,7 +11,7 @@ import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import Footer from './Footer';// Import the Footer component
 import styled from 'styled-components';
-import ElectionVotesLog from './maincontent/ElectionResults/report';
+import ElectionVotesLog from './maincontent/ElectionResults/ViewElectionResults';
 
 
 const Container = styled.div`
@@ -39,7 +39,7 @@ const AdminDashboard = () => {
           <Route path="settings" element={<Settings />} />
           <Route path="manage-admin" element={<ManageAdmin />} />
           <Route path="manage-elections" element={<ManageElections />} />
-          <Route path="election-Results" element={<ElectionVotesLog />} />
+          <Route path="admin-dashboard/election-votes-log" element={<ElectionVotesLog />} />
         </Routes>
       </Content>
       <Footer />

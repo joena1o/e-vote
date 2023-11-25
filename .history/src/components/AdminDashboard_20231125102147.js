@@ -11,7 +11,7 @@ import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import Footer from './Footer';// Import the Footer component
 import styled from 'styled-components';
-import ElectionVotesLog from './maincontent/ElectionResults/report';
+import ElectionVotesLog from './maincontent/ElectionResults/ViewElectionResults';
 
 
 const Container = styled.div`

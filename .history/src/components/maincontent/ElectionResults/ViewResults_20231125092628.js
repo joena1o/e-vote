@@ -1,12 +1,32 @@
+// Import necessary dependencies from Chakra UI and React
 import React, { useState, useEffect } from 'react';
-import { Box, Heading, Text, useColorModeValue, Table, Thead, Tbody, Tr, Th, Td, Badge, Wrap, WrapItem, Card, CardHeader, CardBody } from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  Text,
+  useColorModeValue,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Badge,
+  Flex,
+  Wrap,
+  WrapItem,
+  Card,
+  CardHeader,
+  CardBody,
+} from '@chakra-ui/react';
+
+// Import the motion and useAnimation from framer-motion
 import { motion, useAnimation } from 'framer-motion';
-import { Link as RouterLink } from 'react-router-dom';
 
-const MotionCard = motion(Card);
-
+// Define the generateMockData function
 const generateMockData = () => {
-  return [
+  // Mock data for past election results
+  const mockData = [
     {
       id: 1,
       electionName: '2023 SUG General Election',
@@ -18,24 +38,32 @@ const generateMockData = () => {
         { name: 'Chukwuma Uche', votes: 350, position: 'President' },
       ],
       winner: 'Aliya Hamza',
+      totalVoters: 1200,
+      totalAccreditedVoters: 1000,
+      totalVotesCast: 900,
+      result: 'Winner: Aliya Hamza (Presidential)',
     },
-    // Add more election data as needed
+    // Add more mock data as needed
   ];
+
+  return mockData;
 };
 
+// Define the MotionCard component with motion(Card)
+const MotionCard = motion(Card);
+
+// Define the ViewResults component
 const ViewResults = () => {
   const colorModeValue = useColorModeValue('gray.200', 'gray.600');
-  const [pastElectionResults] = useState(generateMockData());
+  const [pastElectionResults] = useState(generateMockData()); // Use the generateMockData function
+
+  
+
   const controls = useAnimation();
 
   useEffect(() => {
     controls.start({ opacity: 1 });
   }, [controls]);
-
-  const handleCardClick = (electionId) => {
-    // Handle the click event, e.g., navigate to a detailed view
-    console.log(`Card clicked for election with ID ${electionId}`);
-  };
 
   return (
     <Box p={4}>
@@ -45,19 +73,18 @@ const ViewResults = () => {
       <Wrap spacing={4}>
         {pastElectionResults.map((election) => (
           <WrapItem key={election.id} flex="1" minW="200px" maxW="300px">
-            <RouterLink to="/admin-dashboard/election-Results">
-              <MotionCard
-                initial={{ opacity: 0 }}
-                animate={controls}
-                transition={{ duration: 0.5 }}
-                onClick={() => handleCardClick(election.id)}
-              >
-                <CardHeader>
-                  <Heading fontSize="sm" fontWeight="semibold">
-                    {election.electionName}
-                  </Heading>
-                </CardHeader>
-                <CardBody>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={controls}
+              transition={{ duration: 0.5 }}
+            >
+              <MotionCard>
+              <CardHeader>
+                <Heading fontSize="sm" fontWeight="semibold">
+                  {election.electionName}
+                </Heading>
+              </CardHeader>
+              <CardBody>
   <Text fontSize="xs">Date: {election.date}</Text>
   <Text fontSize="xs">Election Type: {election.electionType}</Text>
   <Text fontSize="xs">Total Voters: {election.totalVoters}</Text>
@@ -88,8 +115,8 @@ const ViewResults = () => {
     </Tbody>
   </Table>
 </CardBody>
-              </MotionCard>
-            </RouterLink>
+
+            </MotionCard>
           </WrapItem>
         ))}
       </Wrap>

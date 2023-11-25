@@ -45,7 +45,7 @@ const ViewResults = () => {
       <Wrap spacing={4}>
         {pastElectionResults.map((election) => (
           <WrapItem key={election.id} flex="1" minW="200px" maxW="300px">
-            <RouterLink to="/admin-dashboard/election-Results">
+            <RouterLink to="/election-votes-log">
               <MotionCard
                 initial={{ opacity: 0 }}
                 animate={controls}
