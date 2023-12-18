@@ -18,7 +18,7 @@ Installation
 bash
 Copy code
 # Clone the repository
-git clone https://github.com/yungmiz/SUG_MAU_VotingSystem.git
+git clone [https://github.com/yungmiz/SUG_MAU_VotingSystem.git](https://github.com/joena1o/E-VOTING-MAU.git)
 
 # Navigate to the project directory
 cd SUG_MAU_VotingSystem
