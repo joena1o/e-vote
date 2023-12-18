@@ -1,7 +1,7 @@
 
 SUG_MAU Voting System (EVS)
 🚀 Introduction
-The SUG_MAU Voting System (EVS) is a comprehensive software designed to facilitate and manage student election processes digitally, ensuring a seamless, transparent, and efficient voting experience. It aims to enhance voter participation, improve result accuracy, and provide a platform for fair voting processes by utilizing unique online login details and integrating student data from the university’s SRMS.
+The SUG_MAU Voting System (EVS) is a comprehensive software designed to facilitate and manage student election processes digitally, ensuring a seamless, transparent, and efficient voting experience. It aims to enhance voter participation, improve result accuracy, and provide a platform for fair voting processes by utilizing unique online login details and integrating student data from the university’s directory.
 
 🗳️ Key Features
 1. Election Creation
@@ -12,7 +12,7 @@ The SUG_MAU Voting System (EVS) is a comprehensive software designed to facilita
 
 🛠️ Getting Started
 Prerequisites
-[Software Requirement]
+[Software Requirement]cONNECT aPPLIaPPLYFY
 [Hardware Requirement]
 Installation
 bash
