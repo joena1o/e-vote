@@ -1,6 +1,6 @@
 
 import { Modal,ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody,ModalCloseButton,Button,useDisclosure} from '@chakra-ui/react'
-import {Table,Thead,TabList,Tab,Tabs,Tbody,Tr,Th,Td,TableCaption,TabPanel, TabPanels, Stack, HStack, TableContainer} from '@chakra-ui/react';
+import {Table,Thead,TabList,Tab,Tabs,Tbody,Tr,Th,Td,TableCaption,TabPanel, TabPanels, HStack, TableContainer} from '@chakra-ui/react';
 import {FormControl,FormLabel} from '@chakra-ui/react';
 import { Select } from '@chakra-ui/react'
 import { Input } from '@chakra-ui/react'
@@ -11,15 +11,14 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  BreadcrumbSeparator,
 } from '@chakra-ui/react'
 
 
 function StudentNominate() {
 
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    // const handleOpen = () => setOpen(true);
+    // const handleClose = () => setOpen(false);
 
     const { isOpen, onOpen, onClose } = useDisclosure()
 

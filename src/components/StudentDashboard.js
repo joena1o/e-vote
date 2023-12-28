@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Navbar from './Navbar';
-import React, { useState } from 'react';
+import React from 'react';
 import StudentDashSideBar from './StudentDashboardComponents/StudentDashboardSideBar';
 import { Route, Routes } from 'react-router-dom';
 import Settings from './maincontent/Settings/Settings';
@@ -11,6 +11,7 @@ import StudentHome from './StudentDashboardComponents/Pages/Home';
 import NomineesPage from './StudentDashboardComponents/Pages/NomineesPage';
 import VotePage from './StudentDashboardComponents/Pages/VotePage';
 import ElectionApplication from './StudentDashboardComponents/Pages/ElectionApplicationPage';
+import { ActiveElection } from './StudentDashboardComponents/Pages/ActiveElection';
 
  const StudentDashboard = ()=>{
 
@@ -37,6 +38,7 @@ const Content = styled.div`
             <Route index path="home" element={<StudentHome />} />
             <Route path="settings" element={<Settings />} />
             <Route path="nominate" element={<StudentNominate />} />
+            <Route path="election" element={<ActiveElection />} />
             <Route path='vote' element={<StudentVote />} />
             <Route path='election-page' element={<ElectionPage />} />
             <Route path='nominees-page/:data' element={<NomineesPage />} />

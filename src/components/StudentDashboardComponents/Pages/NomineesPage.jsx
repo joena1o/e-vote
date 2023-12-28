@@ -1,23 +1,19 @@
 import {Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, useDisclosure} from '@chakra-ui/react'
-import { Table, Thead, TabList, Tab, Tabs, Tbody, Tr, Th, Td, TableCaption, TabPanel, TabPanels, Stack, TableContainer } from '@chakra-ui/react';
+import { Table, Thead, TabList, Tab, Tabs, Tbody, Tr, Th, Td, TableCaption, TabPanel, TabPanels, TableContainer, Textarea } from '@chakra-ui/react';
 import { FormControl, FormLabel } from '@chakra-ui/react';
-import {Breadcrumb,BreadcrumbItem,BreadcrumbLink,BreadcrumbSeparator} from '@chakra-ui/react'
-import { Select } from '@chakra-ui/react'
-import { Input } from '@chakra-ui/react'
+import {Breadcrumb,BreadcrumbItem,BreadcrumbLink} from '@chakra-ui/react'
 import React, { useState } from 'react';
-import { HStack, VStack } from '@chakra-ui/react'
-import { AiFillEye } from 'react-icons/ai'
-import { Route, useParams, Link } from 'react-router-dom';
-import { Container } from '@chakra-ui/react'
+import { HStack} from '@chakra-ui/react'
+import {useParams } from 'react-router-dom';
 import logo from '../../../assets/school_logo.jpg';
+import { LuPen } from "react-icons/lu";
+import { Select } from '@chakra-ui/react'
 
 
 function NomineesPage(){
 
                  const { data } = useParams();
                  const [open, setOpen] = useState(false);
-                 const handleOpen = () => setOpen(true);
-                 const handleClose = () => setOpen(false);
                  const { isOpen, onOpen, onClose } = useDisclosure()
                  
 
@@ -64,41 +60,48 @@ function NomineesPage(){
 
                  <TabPanel>
 
+                    <div style={{display:"inline-flex", justifyContent:"flex-end", width:"100%", 
+                        alignItems:"center", margin:"20px"}}>
+                     Submit Petition    
+                    <Button colorScheme='yellow' 
+                    style={{marginLeft:"20px"}}
+                    onClick={onOpen} variant='outline'><LuPen /></Button>  
+                    </div>
+
+                 
+
                  <TableContainer style={{width:"100%"}}>
-                 <Table variant='striped' size="lg">
-                 <TableCaption>Applied Candidates</TableCaption>
-                 <Thead>
-                 <Tr style={{textAlign:"start"}}>
-                 <Th>Full-name</Th>
-                 <Th isNumeric>Department</Th>
-                 <Th isNumeric>Display Picture</Th>
-                 {/* <Th>Action</Th> */}
-                 <Th>Status</Th>
-                 </Tr>
-                 </Thead>
-                 <Tbody>
-                 <Tr>
-                 <Td>Ahmed Umar Atiku</Td>
-                 <Td>Computer Science</Td>
-                 <Td><img src={logo} width="10%" /></Td>
-                 {/* <Td><Button colorScheme='yellow' variant='outline'><AiFillEye /></Button></Td> */}
-                 <Td>Pending</Td>
-                 </Tr>
-                 <Tr>
-                 <Td>Pascal Ally Ahmadu</Td>
-                 <Td>Computer Science</Td>
-                 <Td><img src={logo} width="10%" /></Td>
-                 {/* <Td><Button colorScheme='yellow' variant='outline'><AiFillEye /></Button></Td> */}
-                 <Td>Pending</Td>
-                 </Tr>
-                 <Tr>
-                 <Td>Hyefur Jonathan</Td>
-                 <Td>Electrical/Electronics Engineering</Td>
-                 <Td><img src={logo} width="10%" /></Td>
-                 {/* <Td><Link to="/student-dashboard/election-page"><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td> */}
-                 <Td>Pending</Td>
-                 </Tr>
-                 </Tbody>
+                    <Table variant='striped' size="lg">
+                        <TableCaption>Applied Candidates</TableCaption>
+                        <Thead>
+                        <Tr style={{textAlign:"start"}}>
+                        <Th>Full-name</Th>
+                        <Th isNumeric>Department</Th>
+                        <Th isNumeric>Display Picture</Th>
+                        {/* <Th>Petition</Th> */}
+                        <Th>Status</Th>
+                        </Tr>
+                        </Thead>
+                    <Tbody>
+                    <Tr>
+                        <Td>Ahmed Umar Atiku</Td>
+                        <Td>Computer Science</Td>
+                        <Td><img src={logo} width="10%" /></Td>
+                        <Td>Pending</Td>
+                    </Tr>
+                    <Tr>
+                        <Td>Pascal Ally Ahmadu</Td>
+                        <Td>Computer Science</Td>
+                        <Td><img src={logo} width="10%" /></Td>
+                        <Td>Pending</Td>
+                    </Tr>
+                    <Tr>
+                        <Td>Hyefur Jonathan</Td>
+                        <Td>Electrical/Electronics Engineering</Td>
+                        <Td><img src={logo} width="10%" /></Td>
+                        <Td>Pending</Td>
+                    </Tr>
+                    </Tbody>
                  </Table>
                  </TableContainer>
                                   
@@ -114,32 +117,30 @@ function NomineesPage(){
                  <Modal isOpen={isOpen} onClose={onClose}>
                  <ModalOverlay />
                  <ModalContent>
-                 <ModalHeader>Candidate Details</ModalHeader>
+                 <ModalHeader>Petition</ModalHeader>
                  <ModalCloseButton />
                  <ModalBody>
                     <FormControl>
 
-                        <FormLabel>Fullname</FormLabel>
-                        <Input type='email' />
-                        <br></br><br></br>
-                        <FormLabel>ID No.</FormLabel>
-                        <Input type='email' />
-                        <br></br><br></br>
-                        <FormLabel>Email address</FormLabel>
-                        <Input type='email' />
-                        <br></br><br></br>
-                        <Select placeholder='Aspiring Position'>
-                            <option value='option1'>Sports Director</option>
-                            <option value='option2'>Director of social</option>
-                            <option value='option3'>President</option>
-                        </Select>
+                    <FormLabel>Select Candidate</FormLabel>
+                    <Select placeholder='Select option'>
+                    <option value='option1'>Option 1</option>
+                    <option value='option2'>Option 2</option>
+                    <option value='option3'>Option 3</option>
+                    </Select><br/>
 
+                        <FormLabel>Note</FormLabel>
+                        <Textarea placeholder='Type message here....' /><br/><br/>
+
+                        <FormLabel>Evidence</FormLabel>
+                        <input type="file" />
+                    
                     </FormControl>
                 </ModalBody>
 
                  <ModalFooter>
                     <Button colorScheme='green' mr={3} onClick={onClose}>
-                        Nominate
+                        Submit
                     </Button>
                     <Button variant='red'>Cancel</Button>
                  </ModalFooter>

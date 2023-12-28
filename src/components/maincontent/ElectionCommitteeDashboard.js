@@ -9,8 +9,6 @@ import ViewResults from './ElectionResults/ViewElectionResults';
 import ElectionCommitteeHome from './home/ElectionCommitteeHome';
 import CandidatesScreening from './CandidateScreening/CandidateScreening';
 
-
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
