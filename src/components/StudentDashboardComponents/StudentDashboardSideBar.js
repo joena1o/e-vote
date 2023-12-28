@@ -83,7 +83,7 @@ function StudentDashSideBar() {
     <SidebarContainer theme={colorMode}>
       <LinkList>
         <LinkItem>
-          <StyledLink to="/student-dashboard" theme={colorMode}>
+          <StyledLink to="/student-dashboard/home" theme={colorMode}>
             <Icon><FiHome /></Icon>
             Home
           </StyledLink>
@@ -101,7 +101,7 @@ function StudentDashSideBar() {
           </StyledLink>
         </LinkItem>
         <LinkItem>
-          <StyledLink to="/settings" theme={colorMode}>
+          <StyledLink to="/student-dashboard/settings" theme={colorMode}>
             <Icon><FiSettings /></Icon>
             Settings
           </StyledLink>

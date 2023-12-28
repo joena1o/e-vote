@@ -3,15 +3,16 @@ import Navbar from './Navbar';
 import React from 'react';
 import StudentDashSideBar from './StudentDashboardComponents/StudentDashboardSideBar';
 import { Route, Routes } from 'react-router-dom';
-import Settings from './maincontent/Settings/Settings';
 import StudentNominate from './StudentDashboardComponents/Pages/Nominate';
 import StudentVote from './StudentDashboardComponents/Pages/Vote';
+import Settings from './maincontent/Settings/Settings';
 import ElectionPage from './StudentDashboardComponents/Pages/ElectionPage';
 import StudentHome from './StudentDashboardComponents/Pages/Home';
 import NomineesPage from './StudentDashboardComponents/Pages/NomineesPage';
 import VotePage from './StudentDashboardComponents/Pages/VotePage';
 import ElectionApplication from './StudentDashboardComponents/Pages/ElectionApplicationPage';
 import { ActiveElection } from './StudentDashboardComponents/Pages/ActiveElection';
+import ElectionVotesLog from './maincontent/ElectionResults/report';
 
  const StudentDashboard = ()=>{
 
@@ -35,7 +36,7 @@ const Content = styled.div`
         <Content>
             <StudentDashSideBar />
             <Routes>
-            <Route index path="home" element={<StudentHome />} />
+            <Route index path="home" element={<ElectionVotesLog />} />
             <Route path="settings" element={<Settings />} />
             <Route path="nominate" element={<StudentNominate />} />
             <Route path="election" element={<ActiveElection />} />
