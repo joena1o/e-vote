@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { FiHome, FiUser, FiUsers, FiFileText, FiSettings, FiLogOut } from 'react-icons/fi';
+import { FiHome, FiSettings, FiLogOut } from 'react-icons/fi';
 import {BsPersonDown} from 'react-icons/bs';
 import {MdOutlineHowToVote} from 'react-icons/md';
-import {GrDocumentVerified} from "react-icons/gr";
 import { useColorMode } from '@chakra-ui/react';
 
 const SidebarContainer = styled.nav`
@@ -96,7 +95,7 @@ function StudentDashSideBar() {
           </StyledLink>
         </LinkItem>
         <LinkItem>
-          <StyledLink to="vote" theme={colorMode}>
+          <StyledLink to="/student-dashboard/election" theme={colorMode}>
             <Icon><MdOutlineHowToVote /></Icon>
             Vote
           </StyledLink>

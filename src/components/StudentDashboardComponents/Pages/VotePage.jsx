@@ -1,8 +1,5 @@
 import {Modal,ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody,ModalCloseButton,Button, useDisclosure} from '@chakra-ui/react'
 import { Table, Thead, TabList, Tab, Tabs, Tbody, Tr, Th, Td, TableCaption, Stack, TableContainer } from '@chakra-ui/react';
-import { FormControl, FormLabel } from '@chakra-ui/react';
-import { Select } from '@chakra-ui/react'
-import { Input } from '@chakra-ui/react'
 import React, { useState } from 'react';
 import { FaVoteYea } from 'react-icons/fa';
 import {HStack, Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator} from '@chakra-ui/react'
@@ -80,7 +77,7 @@ const candidates = [
                   </HStack>
 
 
-                  <p>Select desired candidate</p>
+                  <p>Select desired Candidate</p>
 
                  <div style={{width:"90%", marginTop:"10px", display:"inline-flex", justifyContent:"center"}}>
 
@@ -142,7 +139,7 @@ const candidates = [
                  }
 
 
-                                       <RadioGroup onChange={setValue} value={value}>
+                                       <CheckboxGroup onChange={setValue} value={value}>
 
                                        <Grid templateColumns='repeat(2, minmax(30vw, 2fr))' gap={7} >
 
@@ -152,7 +149,7 @@ const candidates = [
 
                                        <GridItem rowSpan={2} colSpan={1} >
 
-                                       <Radio value={val.val}>
+                                       <Checkbox value={val.val}>
 
                                        
 
@@ -187,7 +184,7 @@ const candidates = [
 
 
                                                       
-                                       </Radio>
+                                       </Checkbox>
 
                                        </GridItem>
 
@@ -196,7 +193,7 @@ const candidates = [
                                        </Grid>
 
 
-                                       </RadioGroup>
+                                       </CheckboxGroup>
 
                  
 
