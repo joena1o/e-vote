@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FiHome, FiSettings, FiLogOut } from 'react-icons/fi';
+import { FiUser } from "react-icons/fi";
 import {BsPersonDown} from 'react-icons/bs';
 import {MdOutlineHowToVote} from 'react-icons/md';
 import { useColorMode } from '@chakra-ui/react';
@@ -98,6 +99,12 @@ function StudentDashSideBar() {
           <StyledLink to="/student-dashboard/election" theme={colorMode}>
             <Icon><MdOutlineHowToVote /></Icon>
             Vote
+          </StyledLink>
+        </LinkItem>
+        <LinkItem>
+          <StyledLink to="/student-dashboard/profile" theme={colorMode}>
+            <Icon><FiUser /></Icon>
+            Profile
           </StyledLink>
         </LinkItem>
         <LinkItem>

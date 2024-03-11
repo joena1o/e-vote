@@ -2,25 +2,25 @@ import {Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, 
 import { Table, Thead, TabList, Tab, Tabs, Tbody, Tr, Th, Td, TableCaption, TabPanel, TabPanels, TableContainer, Textarea } from '@chakra-ui/react';
 import { FormControl, FormLabel } from '@chakra-ui/react';
 import {Breadcrumb,BreadcrumbItem,BreadcrumbLink} from '@chakra-ui/react'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HStack} from '@chakra-ui/react'
 import {useParams } from 'react-router-dom';
 import logo from '../../../assets/school_logo.jpg';
 import { LuPen } from "react-icons/lu";
 import { Select } from '@chakra-ui/react'
+import { supabase } from '../../../supabase';
+
+const bodyStyle = { display: "inline-flex", alignItems: "center", flexDirection: "column", width: "100%", marginTop: "20px" };
 
 
 function NomineesPage(){
 
-                 const { data } = useParams();
-                 const [open, setOpen] = useState(false);
-                 const { isOpen, onOpen, onClose } = useDisclosure()
+    const { data } = useParams();
+    const [open, setOpen] = useState(false);
+    const { isOpen, onOpen, onClose } = useDisclosure();
                  
 
-                 return <div style={{
-                                  display: "inline-flex",
-                                  alignItems: "center", flexDirection: "column", width: "100%", marginTop: "20px"
-                                }}>
+    return <div style={bodyStyle}>
 
                  <HStack spacing='24px' style={{ width: "90%", margin: "50px 0px 50px 0px" }}>
 
@@ -78,7 +78,6 @@ function NomineesPage(){
                         <Th>Full-name</Th>
                         <Th isNumeric>Department</Th>
                         <Th isNumeric>Display Picture</Th>
-                        {/* <Th>Petition</Th> */}
                         <Th>Status</Th>
                         </Tr>
                         </Thead>

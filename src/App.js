@@ -1,9 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import EnhancedLogin from './components/EnhancedLogin';
-import AdminDashboard from './components/AdminDashboard';
 import StudentDashboard from './components/StudentDashboard';
-import ElectionCommitteeDashboard from './components/maincontent/ElectionCommitteeDashboard';
 import { ChakraProvider, ColorModeProvider, Button, useColorMode } from '@chakra-ui/react';
 import { Provider } from 'react-redux';
 import store from './Redux/store';
@@ -27,12 +25,10 @@ function App() {
             <div>
               <Routes>
                 {/* Define your routes */}
-                <Route path="/login" element={<EnhancedLogin />} />
-                <Route path="/admin-dashboard/*" element={<AdminDashboard />} />
-                <Route path="/ElectionCommittee-dashboard/*" element={<ElectionCommitteeDashboard />} />
+                <Route path="/" element={<EnhancedLogin />} />
                 <Route path='/student-dashboard/*' element={<StudentDashboard />} />
                 {/* Redirect root to /admin-dashboard */}
-                <Route path="/" element={<Navigate to="/admin-dashboard" replace />} />
+                <Route path="/" element={<Navigate to="/student-dashboard" replace />} />
               </Routes>
             </div>
           </Router>

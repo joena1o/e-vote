@@ -1,65 +1,116 @@
-import { Button} from '@chakra-ui/react'
-import {Breadcrumb,BreadcrumbItem,BreadcrumbLink} from '@chakra-ui/react'
-import { Select } from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react'
 import { Input } from '@chakra-ui/react'
-import React from 'react';
+import React, {useState} from 'react';
 import { HStack } from '@chakra-ui/react'
-import {FormControl, FormLabel, FormHelperText} from '@chakra-ui/react'
-
-          const ElectionApplication = ()=>{
-                 
-                 return <div style={{display: "inline-flex",
-                 height: "85vh", overflowY:"scroll",
-                 alignItems: "center", flexDirection: "column", width: "100%", marginTop: "20px"}}>
-
-                 <HStack spacing='24px' style={{width:"90%", margin:"20px 0px 50px 0px"}}>
-
-                 <Breadcrumb>
-
-                 <BreadcrumbItem>
-                 <BreadcrumbLink href='#'>Home</BreadcrumbLink>
-                 </BreadcrumbItem>
-
-                 <BreadcrumbItem isCurrentPage>
-                 <BreadcrumbLink href='#'>Nomination</BreadcrumbLink>
-                 </BreadcrumbItem>
-
-                 <BreadcrumbItem isCurrentPage>
-                 <BreadcrumbLink href='#'>Application</BreadcrumbLink>
-                 </BreadcrumbItem>
-
-                 </Breadcrumb>
-
-                 </HStack>
+import { FormControl, FormLabel } from '@chakra-ui/react';
+import { supabase } from '../../../supabase';
+import { useParams } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { CircularProgress } from '@chakra-ui/react';
+import { ToastContainer } from 'react-toastify';
+import { notify } from '../../../util/toast';
 
 
-                 <div style={{width:"50%"}}>
+const ElectionApplication = () => {
 
-                 <FormControl>
+   const [loading, setLoadingStatus] = useState(false);
 
-                 <FormLabel>Upload Image</FormLabel>
-                 <input type='file' /><br/><br/><br/>
+   const {electionId, positionId} = useParams();
 
-               
-                 <FormLabel>Student 1</FormLabel>
-                 <Input type='email' /><br/><br/>
+    const validationSchema = Yup.object().shape({
+      election_id: Yup.string().required('Election Id is required'),
+      nominee_id: Yup.string().required('Nominee Id is required'),
+      nominated_by: Yup.string().required('User is required to be nominated'),
+      position_id: Yup.string().required('Positioned Id is required'),
+      coordinators_email: Yup.string().required('Coordinators email is required'),
+    });
 
-                 <FormLabel>Student 2</FormLabel>
-                 <Input type='email' /><br/><br/>
+    const formik = useFormik({
+      initialValues: {
+         election_id: electionId,
+         nominee_id: "",
+         nominated_by: "EEE/17U/0772",
+         position_id: positionId,
+         coordinators_email: ""
+     },
+       validationSchema,
+       onSubmit: async (values)=>{
+         setLoadingStatus(true);
+         try{
+               const {result, error} = await supabase.from("nominee").insert([values]);
+               if (error) {
+                  throw new Error(error.message);
+               }
+               setLoadingStatus(false);
+               notify("Nominated Successfully");
+               return;
+            }catch(error){
+               setLoadingStatus(false);
+               console.error('Error fetching data from Supabase:', error.message);
+            }
+       }
+    });
 
-                 <FormLabel>Level coordinator email address</FormLabel>
-                 <Input type='email' /><br/><br/>
+    const {
+      handleChange,
+      handleBlur,
+      handleSubmit,
+    } = formik;
+
+   return <div style={{
+      display: "inline-flex",
+      height: "85vh", overflowY: "scroll",
+      alignItems: "center", flexDirection: "column", width: "100%", marginTop: "20px"
+   }}>
+
+      <HStack spacing='24px' style={{ width: "90%", margin: "20px 0px 50px 0px" }}>
+
+         <Breadcrumb>
+
+            <BreadcrumbItem>
+               <BreadcrumbLink href='#'>Home</BreadcrumbLink>
+            </BreadcrumbItem>
+
+            <BreadcrumbItem isCurrentPage>
+               <BreadcrumbLink href='#'>Nomination</BreadcrumbLink>
+            </BreadcrumbItem>
+
+            <BreadcrumbItem isCurrentPage>
+               <BreadcrumbLink href='#'>Application</BreadcrumbLink>
+            </BreadcrumbItem>
+
+         </Breadcrumb>
+
+      </HStack>
 
 
-                 </FormControl><br/><br/>
-                 
+      <div style={{ width: "50%" }}>
+
+         <FormControl>
+
+            <FormLabel>Student ID</FormLabel>
+            <Input type='text' name="nominee_id" onChange={handleChange}
+                    onBlur={handleBlur} /><br /><br />
 
 
-                 <Button colorScheme='yellow'>Submit</Button>
+         </FormControl><br /><br />
 
-                 </div>
 
-              </div>
+
+         { !loading ? <Button onClick={(e) => {
+                  e.preventDefault();
+                  handleSubmit();
+                }} colorScheme='yellow'>Submit</Button> : <CircularProgress isIndeterminate />
+                
+         }
+
+      <ToastContainer />
+
+      </div>
+
+   </div>
 }
 
 export default ElectionApplication;

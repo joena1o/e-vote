@@ -3,20 +3,18 @@ import Navbar from './Navbar';
 import React from 'react';
 import StudentDashSideBar from './StudentDashboardComponents/StudentDashboardSideBar';
 import { Route, Routes } from 'react-router-dom';
-import StudentNominate from './StudentDashboardComponents/Pages/Nominate';
+import Nominate from './StudentDashboardComponents/Pages/Nominate';
 import StudentVote from './StudentDashboardComponents/Pages/Vote';
-import Settings from './maincontent/Settings/Settings';
 import ElectionPage from './StudentDashboardComponents/Pages/ElectionPage';
-import StudentHome from './StudentDashboardComponents/Pages/Home';
 import NomineesPage from './StudentDashboardComponents/Pages/NomineesPage';
 import VotePage from './StudentDashboardComponents/Pages/VotePage';
 import ElectionApplication from './StudentDashboardComponents/Pages/ElectionApplicationPage';
 import { ActiveElection } from './StudentDashboardComponents/Pages/ActiveElection';
-import ElectionVotesLog from './maincontent/ElectionResults/report';
+import StudentsProfile from './StudentDashboardComponents/Pages/StudentsProfile';
 
  const StudentDashboard = ()=>{
 
-    const Container = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   /* Add the following line to ensure Container fills the screen height */
@@ -36,15 +34,14 @@ const Content = styled.div`
         <Content>
             <StudentDashSideBar />
             <Routes>
-            <Route index path="home" element={<ElectionVotesLog />} />
-            <Route path="settings" element={<Settings />} />
-            <Route path="nominate" element={<StudentNominate />} />
+            <Route path="nominate" element={<Nominate />} />
             <Route path="election" element={<ActiveElection />} />
             <Route path='vote' element={<StudentVote />} />
-            <Route path='election-page' element={<ElectionPage />} />
+            <Route path='election-page/:electionId' element={<ElectionPage />} />
+            <Route path='profile' element={<StudentsProfile />} />
             <Route path='nominees-page/:data' element={<NomineesPage />} />
             <Route path='vote-page/:data' element={<VotePage />} />
-            <Route path='election-application-page/:data' element={<ElectionApplication />} />
+            <Route path='election-application-page/:data/:electionId/:positionId' element={<ElectionApplication />} />
             </Routes>
         </Content>
     </Container>;

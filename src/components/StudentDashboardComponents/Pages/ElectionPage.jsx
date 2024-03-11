@@ -1,28 +1,53 @@
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, useDisclosure } from '@chakra-ui/react'
-import { Table, Thead, TabList, Tab, Tabs, Tbody, Tr, Th, Td, TableCaption, TabPanel, TabPanels, Stack, TableContainer } from '@chakra-ui/react';
+import { Table, Thead, Tbody, Tr, Th, Td, TableCaption, TableContainer } from '@chakra-ui/react';
 import { FormControl, FormLabel } from '@chakra-ui/react';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator} from '@chakra-ui/react'
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react'
 import { Select } from '@chakra-ui/react'
 import { Input } from '@chakra-ui/react'
-import React, { useState } from 'react';
-import { HStack, VStack } from '@chakra-ui/react'
+import React, { useState, useEffect } from 'react';
+import { HStack } from '@chakra-ui/react'
 import { AiFillEye } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
-
-const buttonStyle = {
-  padding: "10px",
-  margin: "50px 40px"
-};
+import { Link, useParams } from 'react-router-dom';
+import { supabase } from '../../../supabase';
+import { CircularProgress } from '@chakra-ui/react';
 
 
 function ElectionPage() {
 
-  const [open, setOpen] = useState(false);
+  const [ open, setOpen ] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const { electionId } = useParams();
+
+  const [loading, setLoadingStatus] = useState(false);
+  const [loadingNominee, setNomineeLoadingStatus] = useState(false);
+
+
+  useEffect(() => {
+    fetchDataFromSupabase();
+  }, []);
+
+  const fetchDataFromSupabase = async () => {
+    setLoadingStatus(true);
+    try {
+      const { data, error } = await supabase.from('positions').select(`*`);
+      if (error) {
+        throw error;
+      }
+      setLoadingStatus(false);
+      console.log(data);
+      setAllPositions(data);
+    } catch (error) {
+      setLoadingStatus(false);
+      console.error('Error fetching data from Supabase:', error.message);
+    }
+  };
+
+  const [ allPositions, setAllPositions ] = useState([]);
+  
 
   return <div style={{
     display: "inline-flex",
@@ -50,9 +75,8 @@ function ElectionPage() {
     </HStack>
 
 
-
     <TableContainer style={{ width: "90%" }}>
-      <Table variant='striped' size="lg">
+      { !loading ? <Table variant='striped' size="lg">
         <TableCaption>Available Positions</TableCaption>
         <Thead>
           <Tr style={{ textAlign: "start" }}>
@@ -64,45 +88,19 @@ function ElectionPage() {
           </Tr>
         </Thead>
         <Tbody>
-          <Tr>
-            <Td>SUG President</Td>
-            <Td>2022/2023</Td>
-            <Td>19 candidates</Td>
-            <Td><Link to={`/student-dashboard/nominees-page/${"SUG President"}`}><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
-            <Td><Link to={`/student-dashboard/election-application-page/${"SUG President"}`}><Button colorScheme='yellow'>Apply</Button></Link></Td>
-          </Tr>
-          <Tr>
-            <Td>Director Of Social</Td>
-            <Td>2022/2023</Td>
-            <Td>19 candidates</Td>
-            <Td><Button colorScheme='yellow' variant='outline'><AiFillEye /></Button></Td>
-            <Td><Link to={`/student-dashboard/election-application-page/${"SUG President"}`}><Button colorScheme='yellow'>Apply</Button></Link></Td>
-          </Tr>
-          <Tr>
-            <Td>Director Of Sports</Td>
-            <Td>2022/2023</Td>
-            <Td>19 candidates</Td>
-            <Td><Button colorScheme='yellow' variant='outline'><AiFillEye /></Button></Td>
-            <Td><Link to={`/student-dashboard/election-application-page/${"SUG President"}`}><Button colorScheme='yellow'>Apply</Button></Link></Td>
-          </Tr>
-
-          <Tr>
-            <Td>Treasurer</Td>
-            <Td>2022/2023</Td>
-            <Td>19 candidates</Td>
-            <Td><Button colorScheme='yellow' variant='outline'><AiFillEye /></Button></Td>
-            <Td><Link to={`/student-dashboard/election-application-page/${"SUG President"}`}><Button colorScheme='yellow'>Apply</Button></Link></Td>
-          </Tr>
-
-          <Tr>
-            <Td>Financial Secretary</Td>
-            <Td>2022/2023</Td>
-            <Td>19 candidates</Td>
-            <Td><Button colorScheme='yellow' variant='outline'><AiFillEye /></Button></Td>
-            <Td><Link to={`/student-dashboard/election-application-page/${"SUG President"}`}><Button colorScheme='yellow'>Apply</Button></Link></Td>
-          </Tr>
+          {
+            allPositions.map((position)=>(
+              <Tr>
+                <Td>{position.name}</Td>
+                <Td>2022/2023</Td>
+                <Td> Candidates</Td>
+                <Td><Link to={`/student-dashboard/nominees-page/${"SUG President"}`} ><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
+                <Td><Link to={`/student-dashboard/election-application-page/${"SUG President"}/${electionId}/${position.id}`} ><Button colorScheme='yellow'>Nominate</Button></Link></Td>
+              </Tr>
+            ))
+          }
         </Tbody>
-      </Table>
+      </Table> : <CircularProgress isIndeterminate /> }
     </TableContainer>
 
 

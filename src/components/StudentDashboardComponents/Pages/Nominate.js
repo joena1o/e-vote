@@ -4,29 +4,47 @@ import {Table,Thead,TabList,Tab,Tabs,Tbody,Tr,Th,Td,TableCaption,TabPanel, TabPa
 import {FormControl,FormLabel} from '@chakra-ui/react';
 import { Select } from '@chakra-ui/react'
 import { Input } from '@chakra-ui/react'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {AiFillEye} from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-} from '@chakra-ui/react'
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
+import { supabase } from '../../../supabase';
+import { CircularProgress } from '@chakra-ui/react';
 
 
-function StudentNominate() {
+const bodyStyle = { display: "inline-flex", alignItems: "center", flexDirection: "column", width: "100%", marginTop: "20px"};
+
+function Nominate() {
 
     const [open, setOpen] = useState(false);
-    // const handleOpen = () => setOpen(true);
-    // const handleClose = () => setOpen(false);
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const [loading, setLoadingStatus] = useState(false);
+
+    useEffect(() => {
+      fetchDataFromSupabase();
+    }, []);
+  
+    const fetchDataFromSupabase = async () => {
+      setLoadingStatus(true);
+      try {
+        const { data, error } = await supabase.from('elections').select('*');
+        if (error) {
+          throw error;
+        }
+        setLoadingStatus(false);
+        console.log(data);
+        setAllElections(data);
+      } catch (error) {
+        setLoadingStatus(false);
+        console.error('Error fetching data from Supabase:', error.message);
+      }
+    };
+
+    const [ allElections, setAllElections ] = useState([]);
 
 
-    return <div style={{
-        display: "inline-flex",
-        alignItems: "center", flexDirection: "column", width: "100%", marginTop: "20px"
-    }}>
+    return <div style={bodyStyle}>
 
       <HStack spacing='24px' style={{width:"90%", margin:"50px 0px 50px 0px"}}>
 
@@ -56,25 +74,30 @@ function StudentNominate() {
 
         <TabPanel>
         <TableContainer style={{width:"100%"}}>
-          <Table variant='striped' size="lg">
+          {
+            !loading ? <Table variant='striped' size="lg">
             <TableCaption>Available Elections</TableCaption>
             <Thead>
               <Tr style={{textAlign:"start"}}>
                 <Th>All Elections</Th>
-                <Th isNumeric>Session</Th>
                 <Th>Action</Th>
-                <Th>Status</Th>
+                <Th>Election Date</Th>
               </Tr>
             </Thead>
             <Tbody>
-              <Tr>
-                <Td>SUG Election 2023</Td>
-                <Td>2021/2022</Td>
-                <Td><Link to="/student-dashboard/election-page"><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
-                <Td>Upcoming</Td>
-              </Tr>
+                {
+                  allElections.map((election)=>(
+                     <Tr>
+                      <Td>{election.electionTitle}</Td>
+                      {/* <Td>2021/2022</Td> */}
+                      <Td><Link to={`/student-dashboard/election-page/${election.id}`}> <Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
+                      <Td>{election.electionDate}</Td>
+                    </Tr>
+                  ))
+                }
             </Tbody>
-          </Table>
+            </Table> : <CircularProgress isIndeterminate /> 
+          }
         </TableContainer>
         </TabPanel>
 
@@ -91,12 +114,16 @@ function StudentNominate() {
               </Tr>
             </Thead>
             <Tbody>
-              <Tr>
-                <Td>SUG Election 2023</Td>
-                <Td>2021/2022</Td>
-                <Td><Link to="/student-dashboard/election-page"><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
-                <Td>Upcoming</Td>
-              </Tr>
+              {
+                  allElections.map((election)=>(
+                    election.electionType==="general" ? <Tr>
+                      <Td>{election.electionTitle}</Td>
+                      <Td>2021/2022</Td>
+                      <Td><Link to={`/student-dashboard/election-page/${election.id}`}><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
+                      <Td>{election.electionDate}</Td>
+                    </Tr> :<p style={{padding: "30px"}}>No Results</p>
+                  ))
+                }
             </Tbody>
           </Table>
         </TableContainer>
@@ -115,12 +142,18 @@ function StudentNominate() {
               </Tr>
             </Thead>
             <Tbody>
-            <Tr>
-                <Td>SUG Election 2023</Td>
-                <Td>2021/2022</Td>
-                <Td><Link to="/student-dashboard/election-page"><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
-                <Td>Upcoming</Td>
-              </Tr>
+                {
+                  allElections.map((election)=>(
+                    election.electionType==="departmental" ? <Tr>
+                      <Td>{election.electionTitle}</Td>
+                      <Td>2021/2022</Td>
+                      <Td><Link to={`/student-dashboard/election-page/${election.id}`}><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
+                      <Td>{election.electionDate}</Td>
+                    </Tr> :
+                          <p style={{padding: "30px"}}>No Results</p>
+                    
+                  ))
+                }
             </Tbody>
           </Table>
         </TableContainer>
@@ -129,10 +162,6 @@ function StudentNominate() {
         </TabPanels>
 
     </Tabs>
-
-    <br></br><br></br>
-
-
 
 
 
@@ -174,4 +203,4 @@ function StudentNominate() {
     </div>;
 }
 
-export default StudentNominate;
+export default Nominate;

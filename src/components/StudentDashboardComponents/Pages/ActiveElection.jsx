@@ -4,25 +4,43 @@ import {Table,Thead,TabList,Tab,Tabs,Tbody,Tr,Th,Td,TableCaption,TabPanel, TabPa
 import {FormControl,FormLabel} from '@chakra-ui/react';
 import { Select } from '@chakra-ui/react'
 import { Input } from '@chakra-ui/react'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {AiFillEye} from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
+import { supabase } from '../../../supabase';
 
 export const ActiveElection = () => {
 
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
 
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
+    useEffect(() => {
+      fetchDataFromSupabase();
+    }, []);
+  
+    const fetchDataFromSupabase = async () => {
+      try {
+        const { data, error } = await supabase.from('elections').select('*');
+        if (error) {
+          throw error;
+        }
+        console.log(data);
+        setAllElections(data);
+      } catch (error) {
+        console.error('Error fetching data from Supabase:', error.message);
+      }
+    };
+
+    const [ allElections, setAllElections ] = useState([]);
 
   return (
-                 <div style={{display: "inline-flex",alignItems: "center", flexDirection: "column", width: "100%", marginTop: "20px"}}>
+           <div style={{display: "inline-flex",alignItems: "center", flexDirection: "column", width: "100%", marginTop: "20px"}}>
                           
                                 <HStack spacing='24px' style={{width:"90%", margin:"50px 0px 50px 0px"}}>
                           
@@ -64,11 +82,11 @@ export const ActiveElection = () => {
                                       </Thead>
                                       <Tbody>
                                         <Tr>
-                                          <Td>SUG Election 2023</Td>
-                                          <Td>2021/2022</Td>
-                                          <Td><Link to="/student-dashboard/vote"><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
-                                          <Td>Active</Td>
-                                        </Tr>
+                                              <Td>SUG Election 2023</Td>
+                                              <Td>2021/2022</Td>
+                                              <Td><Link to="/student-dashboard/vote"><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
+                                              <Td>Active</Td>
+                                        </Tr>        
                                       </Tbody>
                                     </Table>
                                   </TableContainer>
