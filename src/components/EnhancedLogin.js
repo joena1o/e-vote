@@ -3,6 +3,11 @@ import { Auth } from 'aws-amplify';
 import styled from 'styled-components';
 import { Form, Input, Button, Typography } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { supabase } from '../supabase';
+import { errorNotice, notify } from '../util/toast';
+import { ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
 
 const { Title } = Typography;
 
@@ -99,6 +104,9 @@ const GradientText = styled.p`
 `;
 
 const EnhancedLogin = () => {
+
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({ username: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -111,10 +119,24 @@ const EnhancedLogin = () => {
   const signIn = async () => {
     setLoading(true);
     try {
-      await Auth.signIn(formData.username, formData.password);
+      const {data, error} = await supabase.from("students")
+      .select("*")
+      .eq("matriculation_number", formData.username)
+      .eq("password", formData.password)
+      .limit(1);
+
+      if(data.length != 0){
+        console.log(data);
+        localStorage.setItem("user_auth", JSON.stringify(data[0]));
+        notify("Login successful");
+        navigate('/');
+      }else{
+        errorNotice("Invalid username or password");
+      }
       setError('');
     } catch (error) {
       setError(error.message);
+      errorNotice("An error was encountered when trying to process your request");
     } finally {
       setLoading(false);
     }
@@ -167,6 +189,8 @@ const EnhancedLogin = () => {
         <GradientTitle>Moddibbo Adama University</GradientTitle>
         <GradientText>Electronic Voting System</GradientText>
       </GradientSection>
+
+      <ToastContainer />
     </Container>
   );
 };

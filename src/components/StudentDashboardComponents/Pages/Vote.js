@@ -14,12 +14,16 @@ const StudentVote = () => {
 
   const fetchDataFromSupabase = async () => {
     try {
-      const { data, error } = await supabase.from('positions').select('*');
+
+      const { data, error } = await supabase
+      .from('elections')
+      .select('*');
+
       if (error) {
         throw error;
       }
       console.log(data);
-      setAllPositions(data);
+      setAllPositions(data[0].positions);
     } catch (error) {
       console.error('Error fetching data from Supabase:', error.message);
     }
@@ -45,14 +49,6 @@ const StudentVote = () => {
 
     </HStack>
 
-    <Tabs style={{ width: "90%" }}>
-      <TabList>
-        <Tab>All</Tab>
-        <Tab>General</Tab>
-        <Tab>Departmental</Tab>
-      </TabList>
-    </Tabs>
-
     <br></br><br></br>
 
 
@@ -70,9 +66,9 @@ const StudentVote = () => {
           {
             allPositions.map((val) => (
               <Tr>
-                <Td>{val.name}</Td>
+                <Td>{val}</Td>
                 <Td>
-                  <Link to={`/student-dashboard/vote-page/${"SUG President"}`}>
+                  <Link to={`/student-dashboard/vote-page/${val}`}>
                     <Button colorScheme='yellow' variant='outline'><FaVoteYea /></Button>
                   </Link>
                 </Td>

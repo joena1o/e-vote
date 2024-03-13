@@ -9,6 +9,7 @@ import logo from '../../../assets/school_logo.jpg';
 import { LuPen } from "react-icons/lu";
 import { Select } from '@chakra-ui/react'
 import { supabase } from '../../../supabase';
+import { candidatesSlice } from '../../../Redux/CandidateSlice';
 
 const bodyStyle = { display: "inline-flex", alignItems: "center", flexDirection: "column", width: "100%", marginTop: "20px" };
 
@@ -18,7 +19,39 @@ function NomineesPage(){
     const { data } = useParams();
     const [open, setOpen] = useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const [loading, setLoadingStatus] = useState(false);
+
+    const role = data;
+
+
+    useEffect(() => {
+        fetchDataFromSupabase();
+       }, []);
+    
+    
+      const fetchDataFromSupabase = async () => {
+        setLoadingStatus(true);
+        try {
+          const { data, error } = await supabase.
+          from('nominated_candidates')
+          .select(`*`)
+          .eq("position_id", role)
+          .neq("status", "Decline")
+          
+          if (error) {
+            throw error;
+          }
+          console.log(data);
+          setLoadingStatus(false);
+          setAllNominations(data);
+        } catch (error) {
+          setLoadingStatus(false);
+          console.error('Error fetching data from Supabase:', error.message);
+        }
+      };
                  
+      const [ nominations, setAllNominations ] = useState([]);  
 
     return <div style={bodyStyle}>
 
@@ -72,34 +105,25 @@ function NomineesPage(){
 
                  <TableContainer style={{width:"100%"}}>
                     <Table variant='striped' size="lg">
-                        <TableCaption>Applied Candidates</TableCaption>
-                        <Thead>
+                    <TableCaption>Applied Candidates</TableCaption>
+                    <Thead>
                         <Tr style={{textAlign:"start"}}>
                         <Th>Full-name</Th>
                         <Th isNumeric>Department</Th>
-                        <Th isNumeric>Display Picture</Th>
                         <Th>Status</Th>
                         </Tr>
-                        </Thead>
+                    </Thead>
                     <Tbody>
-                    <Tr>
-                        <Td>Ahmed Umar Atiku</Td>
-                        <Td>Computer Science</Td>
-                        <Td><img src={logo} width="10%" /></Td>
-                        <Td>Pending</Td>
-                    </Tr>
-                    <Tr>
-                        <Td>Pascal Ally Ahmadu</Td>
-                        <Td>Computer Science</Td>
-                        <Td><img src={logo} width="10%" /></Td>
-                        <Td>Pending</Td>
-                    </Tr>
-                    <Tr>
-                        <Td>Hyefur Jonathan</Td>
-                        <Td>Electrical/Electronics Engineering</Td>
-                        <Td><img src={logo} width="10%" /></Td>
-                        <Td>Pending</Td>
-                    </Tr>
+                        {
+
+                        nominations.map((value)=>(
+                            <Tr>
+                            <Td>{value.candidate_id}</Td>
+                            <Td>Computer Science</Td>
+                            <Td>{value.status}</Td>
+                            </Tr>
+                        ))
+                        }
                     </Tbody>
                  </Table>
                  </TableContainer>
@@ -123,9 +147,11 @@ function NomineesPage(){
 
                     <FormLabel>Select Candidate</FormLabel>
                     <Select placeholder='Select option'>
-                    <option value='option1'>Option 1</option>
-                    <option value='option2'>Option 2</option>
-                    <option value='option3'>Option 3</option>
+                    {
+                        nominations.map((values)=>(
+                            <option value={values.candidate_id}>{values.candidate_id}</option>
+                        ))
+                    }
                     </Select><br/>
 
                         <FormLabel>Note</FormLabel>

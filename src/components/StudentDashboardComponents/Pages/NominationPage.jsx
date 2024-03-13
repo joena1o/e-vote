@@ -12,18 +12,11 @@ import { supabase } from '../../../supabase';
 import { CircularProgress } from '@chakra-ui/react';
 
 
-function ElectionPage() {
-
-  const [ open, setOpen ] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+function NominationPage() {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const { electionId } = useParams();
-
   const [loading, setLoadingStatus] = useState(false);
-  const [loadingNominee, setNomineeLoadingStatus] = useState(false);
 
 
   useEffect(() => {
@@ -33,13 +26,15 @@ function ElectionPage() {
   const fetchDataFromSupabase = async () => {
     setLoadingStatus(true);
     try {
-      const { data, error } = await supabase.from('positions').select(`*`);
+      const { data,  error } = await supabase.from('elections')
+      .select("*")
+      .eq('id', electionId);
       if (error) {
         throw error;
       }
       setLoadingStatus(false);
-      console.log(data);
-      setAllPositions(data);
+      console.log(data[0].positions);
+      setAllPositions(data[0].positions);
     } catch (error) {
       setLoadingStatus(false);
       console.error('Error fetching data from Supabase:', error.message);
@@ -81,8 +76,6 @@ function ElectionPage() {
         <Thead>
           <Tr style={{ textAlign: "start" }}>
             <Th>Aspiring Position</Th>
-            <Th isNumeric>Session</Th>
-            <Th>Nominees</Th>
             <Th>View</Th>
             <Th>Action</Th>
           </Tr>
@@ -91,11 +84,9 @@ function ElectionPage() {
           {
             allPositions.map((position)=>(
               <Tr>
-                <Td>{position.name}</Td>
-                <Td>2022/2023</Td>
-                <Td> Candidates</Td>
-                <Td><Link to={`/student-dashboard/nominees-page/${"SUG President"}`} ><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
-                <Td><Link to={`/student-dashboard/election-application-page/${"SUG President"}/${electionId}/${position.id}`} ><Button colorScheme='yellow'>Nominate</Button></Link></Td>
+                <Td>{position}</Td>
+                <Td><Link to={`/student-dashboard/nominees-page/${position}`} ><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
+                <Td><Link to={`/student-dashboard/election-application-page/${position}/${electionId}/${position}`} ><Button colorScheme='yellow'>Nominate</Button></Link></Td>
               </Tr>
             ))
           }
@@ -146,4 +137,4 @@ function ElectionPage() {
   </div>;
 }
 
-export default ElectionPage;;
+export default NominationPage;

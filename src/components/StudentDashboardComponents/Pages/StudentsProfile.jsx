@@ -1,105 +1,80 @@
 import React, {useState, useEffect} from 'react';
 import { HStack, Stack, StackDivider } from '@chakra-ui/react';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
-import { FormLabel, Input } from '@chakra-ui/react';
 import { ToastContainer } from 'react-toastify';
-import { Card, CardBody, Text, Box, Heading } from '@chakra-ui/react';
+import { Card, CardBody, Box, Heading, Text } from '@chakra-ui/react';
 import { supabase } from '../../../supabase';
 import { CircularProgress } from '@chakra-ui/react';
 import { Button, ButtonGroup } from '@chakra-ui/react';
-import { notify } from '../../../util/toast';
+import { notify, errorNotice } from '../../../util/toast';
+import { filterArrayBasedOnValue } from '../../../util/filter';
 
 const bodyStyle = { display: "inline-flex", alignItems: "center", flexDirection: "column", width: "100%", marginTop: "20px"};
 
+
+
 const StudentsProfile = () => {
 
-   const [loading, setLoadingStatus] = useState(false);
-   const [loadingAcceptance, setLoadingAcceptance] = useState(false);
+const [loading, setLoadingStatus] = useState(false);
+const [loadingAcceptance, setLoadingAcceptance] = useState({value: false, index: 0});
+
+const jsonString = localStorage.getItem('user_auth');
+var parsedData = JSON.parse(jsonString); 
 
    useEffect(() => {
     fetchDataFromSupabase();
-    fetchPositions();
-    fetchCandidates();
-  }, []);
-
-
-  const fetchPositions = async () => {
-                 setLoadingStatus(true);
-                 try {
-                   const { data, error } = await supabase.from('positions').select(`*`);
-                   if (error) {
-                     throw error;
-                   }
-                   setLoadingStatus(false);
-                   console.log(data);
-                   setAllPositions(data);
-   } catch (error) {
-                 setLoadingStatus(false);
-                 console.error('Error fetching data from Supabase:', error.message);
-   }
-};
-
-const fetchCandidates = async () => {
-                 setLoadingStatus(true);
-                 try {
-                   const { data, error } = await supabase.from('nominated_candidates').select(`*`);
-                   if (error) {
-                     throw error;
-                   }
-                   setLoadingStatus(false);
-                   console.log(data);
-                   setAllCandidates(data);
-   } catch (error) {
-                 setLoadingStatus(false);
-                 console.error('Error fetching data from Supabase:', error.message);
-   }
-};
-             
-const [ allPositions, setAllPositions ] = useState([]);
-
-const [ allCandidates, setAllCandidates ] = useState([]);
+   }, []);
 
 
   const fetchDataFromSupabase = async () => {
     setLoadingStatus(true);
     try {
-      const { data, error } = await supabase.from('nominee').select(`*`).eq("nominee_id", "EEE/17U/0772");
+      const { data, error } = await supabase.
+      from('nominated_candidates')
+      .select(`*`)
+      .eq("candidate_id", parsedData.matriculation_number)
+      .gt("nomination_number", 1);
+      
       if (error) {
         throw error;
       }
       console.log(data);
       setLoadingStatus(false);
-      const newData = data.filter(item => item.nominee_id === "EEE/17U/0772");
-      setAllNominations(newData);
+      setAllNominations(data);
     } catch (error) {
       setLoadingStatus(false);
       console.error('Error fetching data from Supabase:', error.message);
     }
   };
 
+
+  const nominationAcceptance = async(payload,index)=>{
+       setLoadingAcceptance(true);
+       try{
+          const { error } = await supabase.
+          from('nominated_candidates')
+          .update({
+            status: payload
+          })
+          .eq("candidate_id", parsedData.matriculation_number);
+          if (error) {
+            throw error;
+          }
+          if(payload == "Accepted"){
+            notify("Nomination Accepted, Please wait while in review")
+          }else{
+            notify("Nomination was declined successfully")
+          }
+          setLoadingAcceptance({value: false, index: index});
+       }catch(error){
+         setLoadingAcceptance({value: false, index: index}); 
+         console.error('Error fetching data from Supabase:', error.message);
+         errorNotice("An error occured when process your request")
+       }         
+  }
+
+
   const [ nominations, setAllNominations ] = useState([]);  
-
-
-
-  const acceptNomination = async(nominee_id, position)=>{
-                 setLoadingAcceptance(true);
-                 try{
-                 const {result, error} = await supabase.from("nominated_candidates").insert([{
-                 "candidate_id": nominee_id,
-                 "position": position,
-                 "status": "Awaiting Approval"
-                 }]);
-                 if (error) {
-                 throw new Error(error.message);
-                 }
-                 setLoadingAcceptance(false);
-                 notify("Accepted");
-                 return;
-                 }catch(error){
-                 setLoadingAcceptance(false);
-                 console.error('Error fetching data from Supabase:', error.message);
-                 }
-}
 
   return (
     <div style={bodyStyle}>
@@ -126,58 +101,98 @@ const [ allCandidates, setAllCandidates ] = useState([]);
 
       <Card>
       <CardBody>
-       {
-                 !loading ?
-                 
-                 nominations.length == 0 ? <Text>Empty</Text> : 
-                 <Stack divider={<StackDivider />} spacing='4'>
-                 {
-                 
-                 nominations.map((nomination)=>(
-                 
-                 <Box>
 
+      <Heading size='xs' textTransform='uppercase' color="brown">
+        - Declined
+      </Heading><br/><br/>
+
+      {  
+      !loading ?
+         <Stack divider={<StackDivider />} spacing='4'>
+         {          
+           filterArrayBasedOnValue(nominations, "status", "Decline").map((nomination, index)=>(
+            <Box>
                  <Heading size='xs' textTransform='uppercase'>
-                      {
-                         allPositions.length > 0 ? allPositions.find(obj => obj.id == nomination.position_id).name : "" 
-                      }
+                 {nomination.position_id}
                  </Heading>
+                 <Text>Nominations: {nomination.nomination_number}</Text>
+            </Box>
+         )) 
+         } </Stack> : <CircularProgress isIndeterminate />
+         
+      }
 
-                 <br />
-                 <FormLabel>Level coordinator email address</FormLabel>
-                 <Input type='email' name="coordinators_email" /><br />
+      <br/>
 
+      <br />
+      
+        <hr/><br/>  
+
+      <Heading size='xs' textTransform='uppercase' color="brown">
+        - Accepted
+      </Heading><br/>
+      {    !loading ?
+         <Stack divider={<StackDivider />} spacing='4'>
+         {         
+           filterArrayBasedOnValue(nominations, "status", "Accepted").map((nomination, index)=>(
+            <Box>
+                 <Heading size='xs' textTransform='uppercase'>
+                 {nomination.position_id}
+                 </Heading>
+                 <Text>Nominations: {nomination.nomination_number}</Text>
+            </Box>
+         ))
+         } </Stack> : <CircularProgress isIndeterminate />
+      } <br/>
+
+        <br/>
+
+        <hr/><br/>
+
+        <Heading size='xs' textTransform='uppercase' color="brown">
+          - Nominations
+        </Heading><br/>
+
+       {
+         !loading ?
+         <Stack divider={<StackDivider />} spacing='4'>
+         {      
+           filterArrayBasedOnValue(nominations, "status", "Pending").map((nomination, index)=>(
+            <Box>
+                 <Heading size='xs' textTransform='uppercase'>
+                 {nomination.position_id}
+                 </Heading>
+                 <Text>Nominations: {nomination.nomination_number}</Text>
                  { 
-                 !loadingAcceptance ? <ButtonGroup spacing='2' style={{marginTop:"20px"}}>
+                 !loadingAcceptance.value || loadingAcceptance.index == index  ? <ButtonGroup spacing='2' key={nomination.id} style={{marginTop:"20px"}}>
                   <Button variant='solid' colorScheme='blue' 
                   onClick={(e) => {
-                                  e.preventDefault();
-                                  acceptNomination(nomination.nominee_id, allPositions.length > 0 ? allPositions.find(obj => obj.id == nomination.position_id).name : "" )
-                                }}>
+                    e.preventDefault();
+                    nominationAcceptance("Accepted", index)
+                  }}>
                    Accept 
                   </Button>
-                  <Button variant='ghost' colorScheme='red'>
+                  <Button variant='ghost' colorScheme='red' 
+                   onClick={(e) => {
+                                  e.preventDefault();
+                                  nominationAcceptance("Decline", index)
+                 }}>
                   Decline
                   </Button>
                  </ButtonGroup> : <CircularProgress isIndeterminate />
                  }
-                 </Box>
+                 <br/>
+            </Box>
+         ))
+        }
+       </Stack> : <CircularProgress isIndeterminate />
+      }          
+     </CardBody>
+     </Card>
 
-                 )
-                 
-                 )
-                 
-                 }
-                 </Stack>
-                 : <CircularProgress isIndeterminate />
-       }          
-      </CardBody>
-      </Card>
+   <ToastContainer />   
 
-
-      <ToastContainer />
-
-      </div>
+   </div>
 
     </div>
   )

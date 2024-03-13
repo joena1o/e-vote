@@ -1,4 +1,3 @@
-
 import { Modal,ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody,ModalCloseButton,Button,useDisclosure} from '@chakra-ui/react'
 import {Table,Thead,TabList,Tab,Tabs,Tbody,Tr,Th,Td,TableCaption,TabPanel, TabPanels, HStack, TableContainer} from '@chakra-ui/react';
 import {FormControl,FormLabel} from '@chakra-ui/react';
@@ -10,6 +9,8 @@ import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
 import { supabase } from '../../../supabase';
 import { CircularProgress } from '@chakra-ui/react';
+import { filterArrayBasedOnValue } from '../../../util/filter';
+import { formatDate, getTimeDifference } from '../../../util/formatDate';
 
 
 const bodyStyle = { display: "inline-flex", alignItems: "center", flexDirection: "column", width: "100%", marginTop: "20px"};
@@ -76,23 +77,32 @@ function Nominate() {
         <TableContainer style={{width:"100%"}}>
           {
             !loading ? <Table variant='striped' size="lg">
-            <TableCaption>Available Elections</TableCaption>
             <Thead>
               <Tr style={{textAlign:"start"}}>
-                <Th>All Elections</Th>
+                <Th>General Elections</Th>
+                <Th isNumeric>Nomination Start Date</Th>
+                <Th isNumeric>Nomination End Date</Th>
                 <Th>Action</Th>
-                <Th>Election Date</Th>
+                <Th>Status</Th>
               </Tr>
             </Thead>
             <Tbody>
                 {
                   allElections.map((election)=>(
-                     <Tr>
+                    <Tr>
                       <Td>{election.electionTitle}</Td>
-                      {/* <Td>2021/2022</Td> */}
-                      <Td><Link to={`/student-dashboard/election-page/${election.id}`}> <Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
-                      <Td>{election.electionDate}</Td>
-                    </Tr>
+                      <Td>{formatDate(election.nominationStartDate)}</Td>
+                      <Td>{formatDate(election.nominationEndDate)}</Td>
+                      <Td><Link to={`/student-dashboard/nomination-page/${election.id}`}><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
+                      <Td>
+                        {
+                        
+                        getTimeDifference(election.nominationStartDate,election.nominationEndDate).days == 0
+                        ? "Ended" : "Ongoing"
+                        
+                        }
+                        </Td>
+                    </Tr> 
                   ))
                 }
             </Tbody>
@@ -104,24 +114,33 @@ function Nominate() {
         <TabPanel>
         <TableContainer style={{width:"100%"}}>
           <Table variant='striped' size="lg">
-            <TableCaption>Available Elections</TableCaption>
+            {/* <TableCaption>Available Elections</TableCaption> */}
             <Thead>
               <Tr style={{textAlign:"start"}}>
                 <Th>General Elections</Th>
-                <Th isNumeric>Session</Th>
+                <Th isNumeric>Nomination Start Date</Th>
+                <Th isNumeric>Nomination End Date</Th>
                 <Th>Action</Th>
                 <Th>Status</Th>
               </Tr>
             </Thead>
             <Tbody>
               {
-                  allElections.map((election)=>(
-                    election.electionType==="general" ? <Tr>
+                filterArrayBasedOnValue(allElections,"electionType","general").map((election)=>(
+                    <Tr>
                       <Td>{election.electionTitle}</Td>
-                      <Td>2021/2022</Td>
-                      <Td><Link to={`/student-dashboard/election-page/${election.id}`}><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
-                      <Td>{election.electionDate}</Td>
-                    </Tr> :<p style={{padding: "30px"}}>No Results</p>
+                      <Td>{formatDate(election.nominationStartDate)}</Td>
+                      <Td>{formatDate(election.nominationEndDate)}</Td>
+                      <Td><Link to={`/student-dashboard/nomination-page/${election.id}`}><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
+                      <Td>
+                        {
+                        
+                        getTimeDifference(election.nominationStartDate,election.nominationEndDate).days == 0
+                        ? "Ended" : "Ongoing"
+                        
+                        }
+                        </Td>
+                    </Tr> 
                   ))
                 }
             </Tbody>
@@ -132,26 +151,33 @@ function Nominate() {
         <TabPanel>
         <TableContainer style={{width:"100%"}}>
           <Table variant='striped' size="lg">
-            <TableCaption>Available Elections</TableCaption>
+            {/* <TableCaption>Available Elections</TableCaption> */}
             <Thead>
               <Tr style={{textAlign:"start"}}>
-                <Th>Department Election</Th>
-                <Th isNumeric>Session</Th>
+                <Th>Departmental Elections</Th>
+                <Th isNumeric>Nomination Start Date</Th>
+                <Th isNumeric>Nomination End Date</Th>
                 <Th>Action</Th>
                 <Th>Status</Th>
               </Tr>
             </Thead>
             <Tbody>
                 {
-                  allElections.map((election)=>(
-                    election.electionType==="departmental" ? <Tr>
+                  filterArrayBasedOnValue(allElections, "electionType", "departmental" ).map((election)=>(
+                    <Tr>
                       <Td>{election.electionTitle}</Td>
-                      <Td>2021/2022</Td>
-                      <Td><Link to={`/student-dashboard/election-page/${election.id}`}><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
-                      <Td>{election.electionDate}</Td>
-                    </Tr> :
-                          <p style={{padding: "30px"}}>No Results</p>
-                    
+                      <Td>{formatDate(election.nominationStartDate)}</Td>
+                      <Td>{formatDate(election.nominationEndDate)}</Td>
+                      <Td><Link to={`/student-dashboard/nomination-page/${election.id}`}><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
+                      <Td>
+                        {
+                        
+                        getTimeDifference(election.nominationStartDate,election.nominationEndDate).days == 0
+                        ? "Ended" : "Ongoing"
+                        
+                        }
+                        </Td>
+                    </Tr> 
                   ))
                 }
             </Tbody>

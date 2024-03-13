@@ -13,10 +13,16 @@ import {
   BreadcrumbLink,
 } from '@chakra-ui/react';
 import { supabase } from '../../../supabase';
+import { getDaysLeft, hasTimestampPassed } from '../../../util/formatDate';
+import { useNavigate } from 'react-router-dom';
+import { errorNotice } from '../../../util/toast';
+import { ToastContainer } from 'react-toastify';
 
 export const ActiveElection = () => {
 
     const [open, setOpen] = useState(false);
+
+    const navigate = useNavigate();
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -75,18 +81,29 @@ export const ActiveElection = () => {
                                       <Thead>
                                         <Tr style={{textAlign:"start"}}>
                                           <Th>All Elections</Th>
-                                          <Th isNumeric>Session</Th>
                                           <Th>Action</Th>
                                           <Th>Status</Th>
                                         </Tr>
                                       </Thead>
                                       <Tbody>
-                                        <Tr>
-                                              <Td>SUG Election 2023</Td>
-                                              <Td>2021/2022</Td>
-                                              <Td><Link to="/student-dashboard/vote"><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
-                                              <Td>Active</Td>
-                                        </Tr>        
+                                      {
+                                          allElections.map((val)=>(
+                                          <Tr>
+                                            <Td>{val.electionTitle}</Td>
+                                            <Td>
+                                            {hasTimestampPassed(val.electionDate)}
+                                                {/* //<Link to="/student-dashboard/vote"> */}
+                                                <Button colorScheme='yellow' onClick={(e)=>{
+                                                  e.preventDefault();
+                                                  hasTimestampPassed(val.electionDate) ? navigate("/student-dashboard/vote")
+                                                  : errorNotice("You cannot proceed at the moment till election date")
+                                                }} variant='outline'><AiFillEye /></Button>
+                                                {/* </Link> */}
+                                                </Td>
+                                            <Td>{getDaysLeft(val.electionDate)}</Td>
+                                          </Tr>
+                                          ))
+                                        }
                                       </Tbody>
                                     </Table>
                                   </TableContainer>
@@ -105,12 +122,16 @@ export const ActiveElection = () => {
                                         </Tr>
                                       </Thead>
                                       <Tbody>
-                                        <Tr>
-                                          <Td>SUG Election 2023</Td>
-                                          <Td>2021/2022</Td>
-                                          <Td><Link to="/student-dashboard/vote"><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
-                                          <Td>Active</Td>
-                                        </Tr>
+                                        {
+                                          allElections.map((val)=>(
+                                          <Tr>
+                                            <Td>SUG Election 2023</Td>
+                                            <Td>2021/2022</Td>
+                                            <Td><Link to="/student-dashboard/vote"><Button colorScheme='yellow'  variant='outline'><AiFillEye /></Button></Link></Td>
+                                            <Td>Active</Td>
+                                          </Tr>
+                                          ))
+                                        }
                                       </Tbody>
                                     </Table>
                                   </TableContainer>
@@ -146,6 +167,7 @@ export const ActiveElection = () => {
                           
                               <br></br><br></br>
                           
+                          <ToastContainer />
                           
                           
                           

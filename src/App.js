@@ -25,7 +25,7 @@ function App() {
             <div>
               <Routes>
                 {/* Define your routes */}
-                <Route path="/" element={<EnhancedLogin />} />
+                <Route path="/login" element={<EnhancedLogin />} />
                 <Route path='/student-dashboard/*' element={<StudentDashboard />} />
                 {/* Redirect root to /admin-dashboard */}
                 <Route path="/" element={<Navigate to="/student-dashboard" replace />} />

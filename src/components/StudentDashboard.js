@@ -5,7 +5,7 @@ import StudentDashSideBar from './StudentDashboardComponents/StudentDashboardSid
 import { Route, Routes } from 'react-router-dom';
 import Nominate from './StudentDashboardComponents/Pages/Nominate';
 import StudentVote from './StudentDashboardComponents/Pages/Vote';
-import ElectionPage from './StudentDashboardComponents/Pages/ElectionPage';
+import NominationPage from './StudentDashboardComponents/Pages/NominationPage';
 import NomineesPage from './StudentDashboardComponents/Pages/NomineesPage';
 import VotePage from './StudentDashboardComponents/Pages/VotePage';
 import ElectionApplication from './StudentDashboardComponents/Pages/ElectionApplicationPage';
@@ -37,7 +37,7 @@ const Content = styled.div`
             <Route path="nominate" element={<Nominate />} />
             <Route path="election" element={<ActiveElection />} />
             <Route path='vote' element={<StudentVote />} />
-            <Route path='election-page/:electionId' element={<ElectionPage />} />
+            <Route path='nomination-page/:electionId' element={<NominationPage />} />
             <Route path='profile' element={<StudentsProfile />} />
             <Route path='nominees-page/:data' element={<NomineesPage />} />
             <Route path='vote-page/:data' element={<VotePage />} />
